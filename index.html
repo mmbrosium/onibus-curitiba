@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <!-- esta linha é o que faz o layout funcionar bem no celular -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ônibus Curitiba</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header>
+    <h1>Ônibus Curitiba</h1>
+    <p class="sub">Linhas da cidade</p>
+  </header>
+
+  <main>
+    <input
+      id="busca"
+      type="search"
+      placeholder="Buscar linha (ex: Solar, Tingui, Boa Vista...)"
+      autocomplete="off">
+
+    <p id="status">Carregando linhas...</p>
+    <ul id="lista"></ul>
+  </main>
+
+  <!-- o JavaScript vem por último, pra garantir que o HTML já existe -->
+  <script src="js/app.js"></script>
+</body>
+</html>

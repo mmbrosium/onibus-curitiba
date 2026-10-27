@@ -1,0 +1,71 @@
+/* Variáveis de cor: definidas num lugar só, usadas no arquivo inteiro.
+   Trocar o tema depois é mudar aqui, não caçar cor por cor. */
+:root {
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --texto: #1c1d21;
+  --suave: #6b7280;
+  --destaque: #7c3aed;
+  --borda: #e5e7eb;
+}
+
+/* Modo escuro automático, seguindo o tema do celular */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15161a;
+    --card: #1f2127;
+    --texto: #f4f5f7;
+    --suave: #9ca3af;
+    --destaque: #a78bfa;
+    --borda: #2c2f36;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--texto);
+  line-height: 1.4;
+}
+
+header {
+  background: var(--destaque);
+  color: #fff;
+  padding: 20px 16px;
+}
+header h1 { font-size: 1.4rem; }
+header .sub { opacity: .85; font-size: .9rem; margin-top: 2px; }
+
+/* max-width + margin auto = conteúdo centralizado e confortável
+   no PC, sem perder o layout de celular */
+main { padding: 16px; max-width: 640px; margin: 0 auto; }
+
+#busca {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--texto);
+  margin-bottom: 14px;
+}
+#busca:focus { outline: 2px solid var(--destaque); border-color: transparent; }
+
+#status { color: var(--suave); font-size: .9rem; margin-bottom: 10px; }
+
+#lista { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+.linha {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.linha .id { font-weight: 700; color: var(--destaque); min-width: 52px; }
+.linha .nome { font-size: .95rem; }

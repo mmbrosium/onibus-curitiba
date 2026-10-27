@@ -1,0 +1,1238 @@
+[
+  {
+    "id": "464",
+    "nome": "A. Munhoz / Jd. Botânico"
+  },
+  {
+    "id": "226",
+    "nome": "Abaeté"
+  },
+  {
+    "id": "182",
+    "nome": "Abranches"
+  },
+  {
+    "id": "332",
+    "nome": "Acrópole"
+  },
+  {
+    "id": "334",
+    "nome": "Agrícola"
+  },
+  {
+    "id": "265",
+    "nome": "Ahú / Los Angeles"
+  },
+  {
+    "id": "560",
+    "nome": "Alferes Poli"
+  },
+  {
+    "id": "232",
+    "nome": "Aliança"
+  },
+  {
+    "id": "629",
+    "nome": "Alto Boqueirão"
+  },
+  {
+    "id": "373",
+    "nome": "Alto Tarumã"
+  },
+  {
+    "id": "245",
+    "nome": "Anita Garibaldi"
+  },
+  {
+    "id": "311",
+    "nome": "Araguaia"
+  },
+  {
+    "id": "350",
+    "nome": "Atuba / Pinheirinho"
+  },
+  {
+    "id": "238",
+    "nome": "Atuba/Sta.Candida"
+  },
+  {
+    "id": "823",
+    "nome": "Augusta"
+  },
+  {
+    "id": "820",
+    "nome": "Augusta/V. Marqueto"
+  },
+  {
+    "id": "361",
+    "nome": "Augusto Stresser"
+  },
+  {
+    "id": "345",
+    "nome": "B. Alto / Atuba"
+  },
+  {
+    "id": "342",
+    "nome": "B. Alto / Boa Vista"
+  },
+  {
+    "id": "307",
+    "nome": "B. Alto / Sta. Felicidade"
+  },
+  {
+    "id": "506",
+    "nome": "Bairro Novo"
+  },
+  {
+    "id": "541",
+    "nome": "Bairro Novo A"
+  },
+  {
+    "id": "542",
+    "nome": "Bairro Novo B"
+  },
+  {
+    "id": "524",
+    "nome": "Bairro Novo B/C"
+  },
+  {
+    "id": "547",
+    "nome": "Bairro Novo C"
+  },
+  {
+    "id": "231",
+    "nome": "Banestado / Califórnia"
+  },
+  {
+    "id": "862",
+    "nome": "Barigui"
+  },
+  {
+    "id": "205",
+    "nome": "Barreirinha"
+  },
+  {
+    "id": "206",
+    "nome": "Barreirinha / São José"
+  },
+  {
+    "id": "725",
+    "nome": "Batel / Mossunguê"
+  },
+  {
+    "id": "875",
+    "nome": "Bigorrilho"
+  },
+  {
+    "id": "225",
+    "nome": "Boa Vista / Barreirinha"
+  },
+  {
+    "id": "175",
+    "nome": "Bom Retiro / Puc"
+  },
+  {
+    "id": "503",
+    "nome": "Boqueirão"
+  },
+  {
+    "id": "505",
+    "nome": "Boqueirão / C. Cívico"
+  },
+  {
+    "id": "528",
+    "nome": "Boqueirão/Pinheirinho"
+  },
+  {
+    "id": "627",
+    "nome": "Bosch"
+  },
+  {
+    "id": "170",
+    "nome": "Bracatinga"
+  },
+  {
+    "id": "X43",
+    "nome": "Brf / Copel"
+  },
+  {
+    "id": "913",
+    "nome": "Butiatuvinha"
+  },
+  {
+    "id": "948",
+    "nome": "Butiatuvinha/ Ouro Verde"
+  },
+  {
+    "id": "516",
+    "nome": "C. Belem / S. Filho"
+  },
+  {
+    "id": "828",
+    "nome": "C. Comprido / C. Raso"
+  },
+  {
+    "id": "826",
+    "nome": "C. Comprido / Cic"
+  },
+  {
+    "id": "150",
+    "nome": "C. Música / V. Alegre"
+  },
+  {
+    "id": "027",
+    "nome": "C. Raso / C. Do Siqueira"
+  },
+  {
+    "id": "658",
+    "nome": "C. Raso / Caiuá"
+  },
+  {
+    "id": "024",
+    "nome": "C. Raso / Camp. Siqueira"
+  },
+  {
+    "id": "207",
+    "nome": "Cabral / Osório"
+  },
+  {
+    "id": "216",
+    "nome": "Cabral / Portão"
+  },
+  {
+    "id": "177",
+    "nome": "Cabral / Pq.Tanguá"
+  },
+  {
+    "id": "220",
+    "nome": "Cabral/Hauer"
+  },
+  {
+    "id": "702",
+    "nome": "Caiua/Cachoeira"
+  },
+  {
+    "id": "706",
+    "nome": "Caiua/Faz/Centro"
+  },
+  {
+    "id": "703",
+    "nome": "Caiuá"
+  },
+  {
+    "id": "386",
+    "nome": "Cajuru"
+  },
+  {
+    "id": "322",
+    "nome": "Camargo"
+  },
+  {
+    "id": "801",
+    "nome": "Camp. Siqueira / Batel"
+  },
+  {
+    "id": "816",
+    "nome": "Camp. Siqueira / Sta.Felicidade"
+  },
+  {
+    "id": "654",
+    "nome": "Campo Alegre"
+  },
+  {
+    "id": "475",
+    "nome": "Canal Belém"
+  },
+  {
+    "id": "628",
+    "nome": "Carbomafra"
+  },
+  {
+    "id": "224",
+    "nome": "Cassiopéia"
+  },
+  {
+    "id": "659",
+    "nome": "Caximba / Olaria"
+  },
+  {
+    "id": "305",
+    "nome": "Centenário"
+  },
+  {
+    "id": "335",
+    "nome": "Centenário / Boqueirão"
+  },
+  {
+    "id": "303",
+    "nome": "Centenário / C. Comprido"
+  },
+  {
+    "id": "338",
+    "nome": "Centenário / Hauer"
+  },
+  {
+    "id": "302",
+    "nome": "Centenário / Rui Barbosa"
+  },
+  {
+    "id": "469",
+    "nome": "Centro Politécnico"
+  },
+  {
+    "id": "210",
+    "nome": "Cic/Cabral"
+  },
+  {
+    "id": "X90",
+    "nome": "Circuito 01"
+  },
+  {
+    "id": "X91",
+    "nome": "Circuito 02"
+  },
+  {
+    "id": "X92",
+    "nome": "Circuito 03"
+  },
+  {
+    "id": "X93",
+    "nome": "Circuito 04"
+  },
+  {
+    "id": "X94",
+    "nome": "Circuito 05"
+  },
+  {
+    "id": "602",
+    "nome": "Circular Sul  (Anti-Horário)"
+  },
+  {
+    "id": "502",
+    "nome": "Circular Sul (Horário)"
+  },
+  {
+    "id": "211",
+    "nome": "Colina Verde"
+  },
+  {
+    "id": "607",
+    "nome": "Colombo / Cic"
+  },
+  {
+    "id": "722",
+    "nome": "Complexo Industrial"
+  },
+  {
+    "id": "778",
+    "nome": "Cotolengo"
+  },
+  {
+    "id": "385",
+    "nome": "Cristo Rei"
+  },
+  {
+    "id": "681",
+    "nome": "Dalagassa"
+  },
+  {
+    "id": "380",
+    "nome": "Detran / Vic. Machado"
+  },
+  {
+    "id": "662",
+    "nome": "Dom Ático"
+  },
+  {
+    "id": "533",
+    "nome": "E. Veríssimo / Pantanal"
+  },
+  {
+    "id": "723",
+    "nome": "Emílio Romani"
+  },
+  {
+    "id": "465",
+    "nome": "Erasto  Gaertner"
+  },
+  {
+    "id": "X48",
+    "nome": "Esp. Eufrásio / Rui Barbosa"
+  },
+  {
+    "id": "X45",
+    "nome": "Especial B.Alto / C.Imbuia"
+  },
+  {
+    "id": "X12",
+    "nome": "Especial Boqueirao"
+  },
+  {
+    "id": "X47",
+    "nome": "Especial Pinheirinho"
+  },
+  {
+    "id": "266",
+    "nome": "Estribo Ahú"
+  },
+  {
+    "id": "466",
+    "nome": "Estudantes"
+  },
+  {
+    "id": "275",
+    "nome": "F. Noronha / Laranjeiras"
+  },
+  {
+    "id": "621",
+    "nome": "Fanny"
+  },
+  {
+    "id": "701",
+    "nome": "Fazendinha"
+  },
+  {
+    "id": "720",
+    "nome": "Fazendinha / C. Comprido"
+  },
+  {
+    "id": "831",
+    "nome": "Fazendinha / C.Raso"
+  },
+  {
+    "id": "611",
+    "nome": "Fazendinha / Portão"
+  },
+  {
+    "id": "614",
+    "nome": "Fazendinha / Puc"
+  },
+  {
+    "id": "724",
+    "nome": "Fazendinha/Caiuá-B.Vista"
+  },
+  {
+    "id": "821",
+    "nome": "Fernão Dias"
+  },
+  {
+    "id": "673",
+    "nome": "Formosa"
+  },
+  {
+    "id": "639",
+    "nome": "Futurama"
+  },
+  {
+    "id": "683",
+    "nome": "Futurama / S. Cercado"
+  },
+  {
+    "id": "822",
+    "nome": "Gabineto"
+  },
+  {
+    "id": "642",
+    "nome": "Ganchinho"
+  },
+  {
+    "id": "625",
+    "nome": "Gramados"
+  },
+  {
+    "id": "561",
+    "nome": "Guilhermina"
+  },
+  {
+    "id": "513",
+    "nome": "Hauer / Boqueirão"
+  },
+  {
+    "id": "525",
+    "nome": "Hauer / C.Raso"
+  },
+  {
+    "id": "371",
+    "nome": "Higienópolis"
+  },
+  {
+    "id": "247",
+    "nome": "Hosp. Veterinário"
+  },
+  {
+    "id": "374",
+    "nome": "Hugo Lange"
+  },
+  {
+    "id": "523",
+    "nome": "Iguape I"
+  },
+  {
+    "id": "515",
+    "nome": "Iguape Ii"
+  },
+  {
+    "id": "023",
+    "nome": "Inter 2 ( Anti-Horário)"
+  },
+  {
+    "id": "022",
+    "nome": "Inter 2 (Horário)"
+  },
+  {
+    "id": "011",
+    "nome": "Interbairros I (Anti-Horário)"
+  },
+  {
+    "id": "010",
+    "nome": "Interbairros I (Horário)"
+  },
+  {
+    "id": "021",
+    "nome": "Interbairros Ii (Anti-Horário)"
+  },
+  {
+    "id": "020",
+    "nome": "Interbairros Ii (Horário)"
+  },
+  {
+    "id": "030",
+    "nome": "Interbairros Iii"
+  },
+  {
+    "id": "040",
+    "nome": "Interbairros Iv"
+  },
+  {
+    "id": "050",
+    "nome": "Interbairros V"
+  },
+  {
+    "id": "060",
+    "nome": "Interbairros Vi"
+  },
+  {
+    "id": "526",
+    "nome": "Itamarati / V. São Pedro"
+  },
+  {
+    "id": "711",
+    "nome": "Itatiaia"
+  },
+  {
+    "id": "366",
+    "nome": "Itupava / Hosp. Militar"
+  },
+  {
+    "id": "468",
+    "nome": "Jd. Centauro"
+  },
+  {
+    "id": "183",
+    "nome": "Jd. Chaparral"
+  },
+  {
+    "id": "655",
+    "nome": "Jd. Da Ordem"
+  },
+  {
+    "id": "244",
+    "nome": "Jd. Do Arroio"
+  },
+  {
+    "id": "865",
+    "nome": "Jd. Esplanada"
+  },
+  {
+    "id": "712",
+    "nome": "Jd. Independência / Cic"
+  },
+  {
+    "id": "917",
+    "nome": "Jd. Ipê"
+  },
+  {
+    "id": "474",
+    "nome": "Jd. Itiberê"
+  },
+  {
+    "id": "972",
+    "nome": "Jd. Itália"
+  },
+  {
+    "id": "169",
+    "nome": "Jd. Kosmos"
+  },
+  {
+    "id": "617",
+    "nome": "Jd. Ludovica"
+  },
+  {
+    "id": "160",
+    "nome": "Jd. Mercês / Guanabara"
+  },
+  {
+    "id": "365",
+    "nome": "Jd. Social / Batel"
+  },
+  {
+    "id": "532",
+    "nome": "Jd.Paranaense"
+  },
+  {
+    "id": "912",
+    "nome": "José Culpi"
+  },
+  {
+    "id": "967",
+    "nome": "Júlio Graf"
+  },
+  {
+    "id": "500",
+    "nome": "Ligeirão Boqueirão"
+  },
+  {
+    "id": "250",
+    "nome": "Ligeirão Norte / Sul"
+  },
+  {
+    "id": "550",
+    "nome": "Ligeirão Pinheirinho / C. Gomes"
+  },
+  {
+    "id": "661",
+    "nome": "Lindóia"
+  },
+  {
+    "id": "635",
+    "nome": "Londrina"
+  },
+  {
+    "id": "641",
+    "nome": "Luiz Nichele"
+  },
+  {
+    "id": "189",
+    "nome": "Mad. Abranches"
+  },
+  {
+    "id": "549",
+    "nome": "Mad. Bairro Novo"
+  },
+  {
+    "id": "509",
+    "nome": "Mad. Boqueirão"
+  },
+  {
+    "id": "789",
+    "nome": "Mad. Caiuá"
+  },
+  {
+    "id": "809",
+    "nome": "Mad. Campo Comprido"
+  },
+  {
+    "id": "309",
+    "nome": "Mad. Centenário"
+  },
+  {
+    "id": "308",
+    "nome": "Mad. Centenário / Rui Barbosa"
+  },
+  {
+    "id": "609",
+    "nome": "Mad. Cic"
+  },
+  {
+    "id": "229",
+    "nome": "Mad. Penha / F. Noronha"
+  },
+  {
+    "id": "489",
+    "nome": "Mad. Petrópolis / Solitude"
+  },
+  {
+    "id": "188",
+    "nome": "Mad. Pilarzinho / Uberaba"
+  },
+  {
+    "id": "209",
+    "nome": "Mad. S. Cândida / C. Raso"
+  },
+  {
+    "id": "519",
+    "nome": "Mad. S. Francisco / Iguape"
+  },
+  {
+    "id": "689",
+    "nome": "Mad. S. Pedro / R. Negro"
+  },
+  {
+    "id": "989",
+    "nome": "Mad. Sta. Felicidade"
+  },
+  {
+    "id": "889",
+    "nome": "Mad. São Bráz"
+  },
+  {
+    "id": "389",
+    "nome": "Mad. Tarumã / Augusta"
+  },
+  {
+    "id": "679",
+    "nome": "Mad. Tatuquara"
+  },
+  {
+    "id": "788",
+    "nome": "Mad. V. Velha"
+  },
+  {
+    "id": "260",
+    "nome": "Mal. Hermes / Sta. Efigênia"
+  },
+  {
+    "id": "633",
+    "nome": "Maria Angélica"
+  },
+  {
+    "id": "522",
+    "nome": "Maringá"
+  },
+  {
+    "id": "181",
+    "nome": "Mateus Leme"
+  },
+  {
+    "id": "331",
+    "nome": "Mercúrio"
+  },
+  {
+    "id": "812",
+    "nome": "Montana"
+  },
+  {
+    "id": "553",
+    "nome": "Moradias Pq. Iguaçu"
+  },
+  {
+    "id": "814",
+    "nome": "Mossunguê"
+  },
+  {
+    "id": "721",
+    "nome": "Mário Jorge"
+  },
+  {
+    "id": "521",
+    "nome": "Nivaldo Braga"
+  },
+  {
+    "id": "360",
+    "nome": "Novena"
+  },
+  {
+    "id": "666",
+    "nome": "Novo Mundo"
+  },
+  {
+    "id": "674",
+    "nome": "Nsa. Sra. Da Luz"
+  },
+  {
+    "id": "280",
+    "nome": "Nsa.Sra.De Nazaré"
+  },
+  {
+    "id": "233",
+    "nome": "Olaria"
+  },
+  {
+    "id": "535",
+    "nome": "Osternack / Boqueirão"
+  },
+  {
+    "id": "548",
+    "nome": "Osternack / S. Cercado"
+  },
+  {
+    "id": "520",
+    "nome": "Osternack / S. Cercado L.D."
+  },
+  {
+    "id": "915",
+    "nome": "Ouro Verde (Via Vl.Bádia)"
+  },
+  {
+    "id": "272",
+    "nome": "Paineiras"
+  },
+  {
+    "id": "640",
+    "nome": "Palmeira"
+  },
+  {
+    "id": "387",
+    "nome": "Palotinos"
+  },
+  {
+    "id": "343",
+    "nome": "Paraíso"
+  },
+  {
+    "id": "534",
+    "nome": "Parigot De Souza"
+  },
+  {
+    "id": "237",
+    "nome": "Parque Atuba"
+  },
+  {
+    "id": "623",
+    "nome": "Parque Industrial"
+  },
+  {
+    "id": "529",
+    "nome": "Parque Náutico"
+  },
+  {
+    "id": "176",
+    "nome": "Parque Tanguá"
+  },
+  {
+    "id": "911",
+    "nome": "Passaúna"
+  },
+  {
+    "id": "928",
+    "nome": "Passaúna / Jd.Ipê"
+  },
+  {
+    "id": "462",
+    "nome": "Petrópolis"
+  },
+  {
+    "id": "304",
+    "nome": "Pinhais / C. Comprido"
+  },
+  {
+    "id": "638",
+    "nome": "Pinheirinho"
+  },
+  {
+    "id": "644",
+    "nome": "Pinheirinho / Cic"
+  },
+  {
+    "id": "700",
+    "nome": "Pinheirinho/Cabral"
+  },
+  {
+    "id": "603",
+    "nome": "Pinheirinho/Rui Barbosa"
+  },
+  {
+    "id": "916",
+    "nome": "Pinheiros"
+  },
+  {
+    "id": "958",
+    "nome": "Pinheiros / José Culpi"
+  },
+  {
+    "id": "631",
+    "nome": "Piratini / Br-476"
+  },
+  {
+    "id": "649",
+    "nome": "Pirineus"
+  },
+  {
+    "id": "646",
+    "nome": "Pompeia/Janaina"
+  },
+  {
+    "id": "616",
+    "nome": "Portao / Sta.Bernadethe"
+  },
+  {
+    "id": "X20",
+    "nome": "Portao/Sitio Cercado"
+  },
+  {
+    "id": "718",
+    "nome": "Porto Belo"
+  },
+  {
+    "id": "671",
+    "nome": "Portão"
+  },
+  {
+    "id": "612",
+    "nome": "Portão / Cic"
+  },
+  {
+    "id": "832",
+    "nome": "Posiville / Inc"
+  },
+  {
+    "id": "794",
+    "nome": "Pq. Lago Azul"
+  },
+  {
+    "id": "171",
+    "nome": "Primavera"
+  },
+  {
+    "id": "632",
+    "nome": "Quartel General"
+  },
+  {
+    "id": "164",
+    "nome": "R.Prado/C.Gomes"
+  },
+  {
+    "id": "168",
+    "nome": "Raposo Tavares"
+  },
+  {
+    "id": "X36",
+    "nome": "Ref. Guadalupe / Fazendinha"
+  },
+  {
+    "id": "X55",
+    "nome": "Reforço Cic / Av. J.K."
+  },
+  {
+    "id": "X14",
+    "nome": "Reforço Hauer"
+  },
+  {
+    "id": "X08",
+    "nome": "Reforço Pinheirinho"
+  },
+  {
+    "id": "X49",
+    "nome": "Reforço Portão / Cabral"
+  },
+  {
+    "id": "X41",
+    "nome": "Reforço Sabará"
+  },
+  {
+    "id": "X02",
+    "nome": "Reforço Tubo Barigui"
+  },
+  {
+    "id": "815",
+    "nome": "Reforço Tuiuti"
+  },
+  {
+    "id": "684",
+    "nome": "Rio Bonito"
+  },
+  {
+    "id": "X38",
+    "nome": "Rio Bonito (Semi-Direto)"
+  },
+  {
+    "id": "685",
+    "nome": "Rio Bonito / Cic"
+  },
+  {
+    "id": "636",
+    "nome": "Rio Negro"
+  },
+  {
+    "id": "827",
+    "nome": "Riviera"
+  },
+  {
+    "id": "622",
+    "nome": "Rondon"
+  },
+  {
+    "id": "680",
+    "nome": "Rurbana"
+  },
+  {
+    "id": "610",
+    "nome": "S. Cercado / C. Raso"
+  },
+  {
+    "id": "653",
+    "nome": "Sabará"
+  },
+  {
+    "id": "375",
+    "nome": "Sagrado Coração"
+  },
+  {
+    "id": "552",
+    "nome": "Sambaqui"
+  },
+  {
+    "id": "817",
+    "nome": "Saturno / Veneza"
+  },
+  {
+    "id": "876",
+    "nome": "Savóia"
+  },
+  {
+    "id": "X11",
+    "nome": "Sitio Cercado / C. Raso"
+  },
+  {
+    "id": "212",
+    "nome": "Solar"
+  },
+  {
+    "id": "463",
+    "nome": "Solitude"
+  },
+  {
+    "id": "713",
+    "nome": "Sta. Amélia"
+  },
+  {
+    "id": "461",
+    "nome": "Sta. Barbara"
+  },
+  {
+    "id": "620",
+    "nome": "Sta. Cruz"
+  },
+  {
+    "id": "203",
+    "nome": "Sta. Cândida / C. Raso"
+  },
+  {
+    "id": "901",
+    "nome": "Sta. Felicidade"
+  },
+  {
+    "id": "902",
+    "nome": "Sta. Felicidade / Pca.Tiradentes"
+  },
+  {
+    "id": "924",
+    "nome": "Sta. Felicidade / Sta. Cândida"
+  },
+  {
+    "id": "274",
+    "nome": "Sta. Gema"
+  },
+  {
+    "id": "531",
+    "nome": "Sta. Inês"
+  },
+  {
+    "id": "637",
+    "nome": "Sta. Joana"
+  },
+  {
+    "id": "760",
+    "nome": "Sta. Quitéria"
+  },
+  {
+    "id": "619",
+    "nome": "Sta. Rita / Cic"
+  },
+  {
+    "id": "X37",
+    "nome": "Sta. Rita / Pinh. (Semi Direto)"
+  },
+  {
+    "id": "650",
+    "nome": "Sta. Rita / Pinheirinho"
+  },
+  {
+    "id": "243",
+    "nome": "Sta. Terezinha"
+  },
+  {
+    "id": "710",
+    "nome": "Sta.Amelia/P.Belo"
+  },
+  {
+    "id": "236",
+    "nome": "São Benedito"
+  },
+  {
+    "id": "965",
+    "nome": "São Bernardo"
+  },
+  {
+    "id": "870",
+    "nome": "São Braz"
+  },
+  {
+    "id": "670",
+    "nome": "São Jorge"
+  },
+  {
+    "id": "213",
+    "nome": "São João"
+  },
+  {
+    "id": "508",
+    "nome": "Sítio Cercado (Anti-Horário)"
+  },
+  {
+    "id": "507",
+    "nome": "Sítio Cercado (Horário)"
+  },
+  {
+    "id": "372",
+    "nome": "Tarumã"
+  },
+  {
+    "id": "707",
+    "nome": "Tatuquara / Centro"
+  },
+  {
+    "id": "708",
+    "nome": "Tatuquara / S. Cercado"
+  },
+  {
+    "id": "864",
+    "nome": "Tequaly"
+  },
+  {
+    "id": "600",
+    "nome": "Tequaly/Quartel General"
+  },
+  {
+    "id": "214",
+    "nome": "Tingui"
+  },
+  {
+    "id": "545",
+    "nome": "Trabalhador"
+  },
+  {
+    "id": "861",
+    "nome": "Tramontina"
+  },
+  {
+    "id": "321",
+    "nome": "Trindade"
+  },
+  {
+    "id": "772",
+    "nome": "Tupy/Juliana"
+  },
+  {
+    "id": "979",
+    "nome": "Turismo"
+  },
+  {
+    "id": "472",
+    "nome": "Uberaba"
+  },
+  {
+    "id": "615",
+    "nome": "Uberlândia"
+  },
+  {
+    "id": "643",
+    "nome": "Umbará"
+  },
+  {
+    "id": "829",
+    "nome": "Univ.Positivo"
+  },
+  {
+    "id": "323",
+    "nome": "V. Autódromo"
+  },
+  {
+    "id": "663",
+    "nome": "V. Cubas"
+  },
+  {
+    "id": "222",
+    "nome": "V. Esperança"
+  },
+  {
+    "id": "761",
+    "nome": "V. Izabel"
+  },
+  {
+    "id": "690",
+    "nome": "V. Juliana"
+  },
+  {
+    "id": "242",
+    "nome": "V. Leonice"
+  },
+  {
+    "id": "477",
+    "nome": "V. Macedo Via Guabirotuba"
+  },
+  {
+    "id": "825",
+    "nome": "V. Marqueto"
+  },
+  {
+    "id": "166",
+    "nome": "V. Nori"
+  },
+  {
+    "id": "336",
+    "nome": "V. Reno"
+  },
+  {
+    "id": "665",
+    "nome": "V. Rex"
+  },
+  {
+    "id": "762",
+    "nome": "V. Rosinha"
+  },
+  {
+    "id": "860",
+    "nome": "V. Sandra"
+  },
+  {
+    "id": "184",
+    "nome": "V. Suiça"
+  },
+  {
+    "id": "471",
+    "nome": "V. São Paulo"
+  },
+  {
+    "id": "709",
+    "nome": "V. Tiradentes / Cic"
+  },
+  {
+    "id": "777",
+    "nome": "V. Velha"
+  },
+  {
+    "id": "779",
+    "nome": "V. Velha/Buriti"
+  },
+  {
+    "id": "652",
+    "nome": "V. Verde"
+  },
+  {
+    "id": "630",
+    "nome": "Vitória Régia"
+  },
+  {
+    "id": "773",
+    "nome": "Vizinhança/Sta. Rita"
+  },
+  {
+    "id": "536",
+    "nome": "Zoológico"
+  },
+  {
+    "id": "863",
+    "nome": "Água Verde"
+  }
+]
