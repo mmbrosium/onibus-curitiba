@@ -1,71 +1,115 @@
-/* Variáveis de cor: definidas num lugar só, usadas no arquivo inteiro.
-   Trocar o tema depois é mudar aqui, não caçar cor por cor. */
-:root {
-  --bg: #f4f5f7;
-  --card: #ffffff;
-  --texto: #1c1d21;
-  --suave: #6b7280;
-  --destaque: #7c3aed;
-  --borda: #e5e7eb;
+:root{
+  --bg:#f4f5f7; --card:#fff; --texto:#1c1d21; --suave:#6b7280;
+  --marca:#4c1d95;      /* roxo meia-noite — header e botões */
+  --acento:#6d28d9;     /* detalhe sobre fundo claro */
+  --borda:#e5e7eb;
+  --verde:#16a34a; --amarelo:#d97706; --vermelho:#dc2626;
+  --tronco:#dc2626;     /* vermelhão (troncal) */
+  --alim:#ea580c;       /* laranja (alimentadora) */
+  --andar:#0ea5e9;
 }
-
-/* Modo escuro automático, seguindo o tema do celular */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #15161a;
-    --card: #1f2127;
-    --texto: #f4f5f7;
-    --suave: #9ca3af;
-    --destaque: #a78bfa;
-    --borda: #2c2f36;
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#121016; --card:#1d1a24; --texto:#f4f5f7; --suave:#a09bad;
+    --marca:#3b0a66; --acento:#b795ff; --borda:#2e2a38;
+    --verde:#4ade80; --amarelo:#fbbf24; --vermelho:#f87171;
+    --tronco:#f87171; --alim:#fb923c; --andar:#38bdf8;
   }
 }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+     background:var(--bg);color:var(--texto);line-height:1.4}
+header{background:var(--marca);color:#fff;padding:18px 16px 0;position:relative}
+header h1{font-size:1.2rem}
+header .sub{opacity:.92;font-size:.85rem;margin-top:2px}
+header .ver{opacity:.72;font-size:.72rem;margin-top:1px}
+.engren{position:absolute;top:16px;right:14px;background:rgba(255,255,255,.2);
+  border:1px solid rgba(255,255,255,.45);color:#fff;width:34px;height:34px;border-radius:50%;
+  font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+.abas{display:flex;gap:4px;margin-top:12px}
+.abas button{flex:1;padding:10px 4px;border:none;background:transparent;color:rgba(255,255,255,.72);
+  font-size:.9rem;font-weight:600;cursor:pointer;border-bottom:3px solid transparent}
+.abas button.on{color:#fff;border-bottom-color:#fff}
 
-body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg);
-  color: var(--texto);
-  line-height: 1.4;
-}
+main{padding:16px;max-width:560px;margin:0 auto}
+.aba-conteudo{display:none}
+.aba-conteudo.on{display:block}
+.vazio{color:var(--suave);font-size:.9rem;text-align:center;padding:30px 10px;
+  border:1px dashed var(--borda);border-radius:12px}
 
-header {
-  background: var(--destaque);
-  color: #fff;
-  padding: 20px 16px;
-}
-header h1 { font-size: 1.4rem; }
-header .sub { opacity: .85; font-size: .9rem; margin-top: 2px; }
+.passo{position:relative;padding:0 0 20px 40px}
+.passo:last-child{padding-bottom:0}
+.passo::before{content:"";position:absolute;left:14px;top:24px;bottom:0;width:2px;background:var(--borda)}
+.passo:last-child::before{display:none}
+.bolha{position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;
+       display:flex;align-items:center;justify-content:center;font-size:15px;
+       background:var(--card);border:2px solid var(--borda)}
+.passo.andar .bolha{border-color:var(--andar)}
+.passo.onibus .bolha{border-color:var(--acento)}
+.passo.baldeacao .bolha{border-color:var(--verde)}
+.titulo{font-weight:600;font-size:.98rem}
+.detalhe{color:var(--suave);font-size:.84rem;margin-top:2px}
+.nota{color:var(--andar);font-size:.76rem;margin-top:3px;font-style:italic}
+.linhaRot{font-weight:700;color:var(--acento);margin-right:3px}
+.linhaRot.tronco{color:var(--tronco)}
+.linhaRot.alim{color:var(--alim)}
+.baldeacao .titulo{color:var(--verde)}
+.selo{display:inline-block;background:color-mix(in srgb,var(--verde) 14%,transparent);
+  color:var(--verde);border:1px solid var(--verde);font-size:.76rem;font-weight:600;
+  padding:1px 7px;border-radius:6px;margin-top:3px}
 
-/* max-width + margin auto = conteúdo centralizado e confortável
-   no PC, sem perder o layout de celular */
-main { padding: 16px; max-width: 640px; margin: 0 auto; }
+.chipHora{display:inline-flex;align-items:center;gap:8px;margin:8px 0 2px;
+  background:var(--card);border:1px solid var(--borda);border-radius:10px;padding:8px 12px;cursor:pointer}
+.chipHora .lab{font-size:.82rem;color:var(--suave)}
+.chipHora .val{font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums;color:var(--acento)}
 
-#busca {
-  width: 100%;
-  padding: 12px 14px;
-  font-size: 1rem;
-  border: 1px solid var(--borda);
-  border-radius: 10px;
-  background: var(--card);
-  color: var(--texto);
-  margin-bottom: 14px;
-}
-#busca:focus { outline: 2px solid var(--destaque); border-color: transparent; }
+.saida{display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--borda);padding:7px 2px}
+.saida:last-child{border-bottom:none}
+.saida .l{font-size:.9rem}
+.saida .r{display:flex;align-items:baseline;gap:8px}
+.saida .h{font-variant-numeric:tabular-nums;font-weight:600;font-size:.95rem}
+.saida .esp{font-size:.76rem;font-weight:600}
+.saida .madruga{font-size:.68rem;color:var(--suave);font-style:italic}
+.e0{color:var(--verde)} .e1{color:var(--amarelo)} .e2{color:var(--vermelho)}
 
-#status { color: var(--suave); font-size: .9rem; margin-bottom: 10px; }
+footer{color:var(--suave);font-size:.76rem;margin-top:22px;padding-top:12px;border-top:1px solid var(--borda)}
 
-#lista { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;
+  align-items:flex-end;justify-content:center;z-index:10}
+.overlay.on{display:flex}
+.folha{background:var(--bg);width:100%;max-width:560px;border-radius:16px 16px 0 0;
+  padding:16px 16px 22px;max-height:80vh;overflow-y:auto}
+.folha h2{font-size:1.05rem;margin-bottom:6px}
+.folha .ok{width:100%;margin-top:14px;padding:12px;border:none;border-radius:10px;
+  background:var(--marca);color:#fff;font-size:1rem;font-weight:700;cursor:pointer}
 
-.linha {
-  background: var(--card);
-  border: 1px solid var(--borda);
-  border-radius: 10px;
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.linha .id { font-weight: 700; color: var(--destaque); min-width: 52px; }
-.linha .nome { font-size: .95rem; }
+/* seletor — 5 visíveis, magrinho, circular */
+.picker{position:relative;display:flex;align-items:center;justify-content:center;gap:4px;height:140px;margin-top:8px}
+.rolo{height:140px;width:62px;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;text-align:center;
+  -webkit-mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent);
+  mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent)}
+.rolo::-webkit-scrollbar{display:none}
+.rolo .pad{height:56px}
+.rolo .pit{height:28px;line-height:28px;scroll-snap-align:center;
+  font-size:1.2rem;font-variant-numeric:tabular-nums;color:var(--texto)}
+.picker .dp{font-size:1.3rem;font-weight:700}
+.picker .faixa{position:absolute;left:24px;right:24px;top:56px;height:28px;
+  border-top:1px solid var(--acento);border-bottom:1px solid var(--acento);pointer-events:none}
+
+.cl h3{font-size:.95rem;margin-top:12px;color:var(--acento)}
+.cl ul{margin:4px 0 0 18px;font-size:.86rem}
+.cl li{margin:2px 0}
+
+/* ---- página de busca de linhas (linhas.html) ---- */
+.topobar{background:var(--marca);color:#fff;padding:16px;display:flex;align-items:center;gap:12px}
+.topobar a.voltar{color:#fff;text-decoration:none;font-size:1.3rem}
+.topobar h1{font-size:1.1rem}
+.linkLinhas{display:inline-block;margin-top:8px;color:#fff;opacity:.9;font-size:.82rem;text-decoration:underline}
+.buscaInput{width:100%;padding:12px 14px;font-size:1rem;border:1px solid var(--borda);
+  border-radius:10px;background:var(--card);color:var(--texto);margin-bottom:12px}
+.buscaInput:focus{outline:2px solid var(--acento);border-color:transparent}
+.linhaItem{background:var(--card);border:1px solid var(--borda);border-radius:10px;
+  padding:12px 14px;display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.linhaItem .id{font-weight:700;color:var(--acento);min-width:48px}

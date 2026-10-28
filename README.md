@@ -1,51 +1,63 @@
 # Ônibus Curitiba
 
-App simples pra consultar as linhas de ônibus de Curitiba, pensado pra
-usar no celular. Feito em HTML, CSS e JavaScript puro (sem framework),
-com um extrator de dados em Python.
+App pra consultar o transporte de Curitiba, pensado pro celular. Feito em
+HTML, CSS e JavaScript puro (sem framework), com extratores em Python.
 
-## A ideia
+Duas telas:
+- **Meu trajeto** (`index.html`) — o caminho casa ⇄ trabalho, com Ida e Volta,
+  baldeação, 1 passagem, e os horários reais das alimentadoras.
+- **Todas as linhas** (`linhas.html`) — busca entre as 309 linhas da cidade.
 
-O dado oficial de transporte de Curitiba vem no formato **GTFS** — um
-pacote de ~78 MB com milhões de registros. Pesado demais pra um site
-abrir no celular. Por isso o projeto tem duas partes:
+## A arquitetura (importante)
 
-1. **Extrator (Python)** — roda no PC, lê o GTFS bruto e gera arquivos
-   pequenos em `dados/` só com o que o app precisa.
-2. **App (HTML/CSS/JS)** — abre no navegador, carrega esses arquivos
-   leves e mostra tudo rápido.
+O dado oficial vem no formato **GTFS** (~78 MB). Pesado demais pro celular.
+Por isso o projeto separa **dados** de **código**:
 
-## Estrutura
+1. **Extratores (Python)** rodam no PC, leem o GTFS e geram arquivos pequenos
+   em `dados/` (`linhas.json`, `trajeto.json`).
+2. **O app (HTML/CSS/JS)** só *lê* esses arquivos. Nenhum horário fica escrito
+   dentro do código — quando a URBS atualiza o feed, roda-se o extrator de novo
+   e o app reflete sozinho.
 
 ```
 .
-├── index.html          # a página
-├── css/estilo.css      # visual
-├── js/app.js           # lógica da tela
-├── dados/linhas.json   # dado enxuto (gerado pelo extrator)
+├── index.html          # Meu trajeto
+├── linhas.html         # Busca das 309 linhas
+├── css/estilo.css
+├── js/app.js           # lógica do Meu trajeto (lê dados/trajeto.json)
+├── js/linhas.js        # lógica da busca   (lê dados/linhas.json)
+├── dados/
+│   ├── trajeto.json    # horários das alimentadoras (gerado)
+│   └── linhas.json     # as 309 linhas (gerado)
 └── extrator/
-    └── extrair.py      # gera dados/linhas.json a partir do GTFS
+    ├── extrair.py          # gera dados/linhas.json
+    └── extrair_trajeto.py  # gera dados/trajeto.json
 ```
 
-## Como atualizar os dados
+## ⚠️ Como abrir
 
-1. Baixe o GTFS de Curitiba e descompacte numa pasta `feed/`:
+Como o app **busca** os arquivos de dados, ele precisa ser servido por HTTP —
+**abra pela URL do GitHub Pages** (`https://mmbrosium.github.io/onibus-curitiba/`),
+não abrindo o arquivo solto no celular (o navegador bloqueia a busca em `file://`).
+
+## Atualizar os dados
+
+1. Baixe e descompacte o GTFS numa pasta `feed/`:
    https://github.com/benaytms/urbs-gtfs/releases/download/latest/gtfs_curitiba.zip
-2. Na raiz do projeto, rode:
+2. Rode os extratores:
    ```
    python extrator/extrair.py feed
+   python extrator/extrair_trajeto.py feed
    ```
-3. Ele regenera `dados/linhas.json`.
+3. Suba os `dados/*.json` atualizados.
 
 ## Roadmap
+- [x] Busca das linhas · Volta · Ida · fiação real (extrator → JSON → app)
+- [ ] Consolidado (ida + volta num resumo)
+- [ ] Minimapa com o traçado das linhas
+- [ ] Busca livre de origem/destino
+- [ ] Tempo real (GPS) e linhas metropolitanas
 
-- [x] Fase 0 — listar e buscar as linhas
-- [ ] Fase 1 — montar trajeto origem → destino pelo horário tabelado
-- [ ] Fase 2 — posição dos ônibus em tempo real
-- [ ] Fase 3 — desvio inteligente de trânsito
-
-## Créditos dos dados
-
-Dados de linhas da URBS (Urbanização de Curitiba S/A), via feed GTFS
-não-oficial mantido pela comunidade a partir dos dados abertos do
-C3SL/UFPR.
+## Créditos
+Dados da URBS (Curitiba), via feed GTFS mantido pela comunidade a partir dos
+dados abertos do C3SL/UFPR.
