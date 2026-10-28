@@ -19,7 +19,8 @@ from collections import defaultdict
 feed = Path(sys.argv[1] if len(sys.argv) > 1 else "feed")
 
 # linhas alimentadoras da Volta e seus nomes
-ALIMENTADORAS = {"212": "Solar", "214": "Tingui", "211": "Colina Verde"}
+# alimentadoras que passam perto de casa (na Erasto) e saem do Terminal Cabral
+ALIMENTADORAS = {"212": "Solar", "214": "Tingui", "213": "São João"}
 
 # nomes das paradas
 nome = {}

@@ -2,6 +2,16 @@
 
 Formato baseado em "Keep a Changelog".
 
+## [0.5.0] — 2026-10-28
+### Adicionado
+- A Volta agora **calcula a partir de "saio do trabalho às agora"**: estima a chegada no
+  tubo Rui Barbosa, no Terminal Cabral e em casa (tempos com "~" são estimados).
+- Seletor de hora passou a **funcionar no mouse**: setas ▲▼, scroll de 1 em 1, sem selecionar texto.
+
+### Corrigido
+- **São João (213)** no lugar do **Colina Verde (211)** nas alimentadoras da Volta — o Colina
+  não passa perto de casa (faz outro trajeto); o São João sai do Cabral e passa na Erasto.
+
 ## [0.4.0] — 2026-10-28
 ### Mudança estrutural (a "virada da fiação")
 - Os horários **saíram do código** e agora moram em `dados/trajeto.json`, gerado

@@ -1,12 +1,8 @@
 :root{
   --bg:#f4f5f7; --card:#fff; --texto:#1c1d21; --suave:#6b7280;
-  --marca:#4c1d95;      /* roxo meia-noite — header e botões */
-  --acento:#6d28d9;     /* detalhe sobre fundo claro */
-  --borda:#e5e7eb;
+  --marca:#4c1d95; --acento:#6d28d9; --borda:#e5e7eb;
   --verde:#16a34a; --amarelo:#d97706; --vermelho:#dc2626;
-  --tronco:#dc2626;     /* vermelhão (troncal) */
-  --alim:#ea580c;       /* laranja (alimentadora) */
-  --andar:#0ea5e9;
+  --tronco:#dc2626; --alim:#ea580c; --andar:#0ea5e9;
 }
 @media (prefers-color-scheme:dark){
   :root{
@@ -26,6 +22,7 @@ header .ver{opacity:.72;font-size:.72rem;margin-top:1px}
 .engren{position:absolute;top:16px;right:14px;background:rgba(255,255,255,.2);
   border:1px solid rgba(255,255,255,.45);color:#fff;width:34px;height:34px;border-radius:50%;
   font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.linkLinhas{display:inline-block;margin-top:8px;color:#fff;opacity:.9;font-size:.82rem;text-decoration:underline}
 
 .abas{display:flex;gap:4px;margin-top:12px}
 .abas button{flex:1;padding:10px 4px;border:none;background:transparent;color:rgba(255,255,255,.72);
@@ -51,6 +48,7 @@ main{padding:16px;max-width:560px;margin:0 auto}
 .titulo{font-weight:600;font-size:.98rem}
 .detalhe{color:var(--suave);font-size:.84rem;margin-top:2px}
 .nota{color:var(--andar);font-size:.76rem;margin-top:3px;font-style:italic}
+.hora-passo{font-size:.82rem;font-weight:600;color:var(--acento);margin-top:3px;font-variant-numeric:tabular-nums}
 .linhaRot{font-weight:700;color:var(--acento);margin-right:3px}
 .linhaRot.tronco{color:var(--tronco)}
 .linhaRot.alim{color:var(--alim)}
@@ -85,17 +83,22 @@ footer{color:var(--suave);font-size:.76rem;margin-top:22px;padding-top:12px;bord
 .folha .ok{width:100%;margin-top:14px;padding:12px;border:none;border-radius:10px;
   background:var(--marca);color:#fff;font-size:1rem;font-weight:700;cursor:pointer}
 
-/* seletor — 5 visíveis, magrinho, circular */
-.picker{position:relative;display:flex;align-items:center;justify-content:center;gap:4px;height:140px;margin-top:8px}
-.rolo{height:140px;width:62px;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;text-align:center;
+/* seletor — rolo circular + setas (mouse) + 5 visíveis */
+.picker{position:relative;display:flex;align-items:center;justify-content:center;gap:4px}
+.col{display:flex;flex-direction:column;align-items:center}
+.seta{background:none;border:none;color:var(--suave);font-size:.9rem;cursor:pointer;
+  height:26px;line-height:26px;padding:0 10px}
+.seta:hover{color:var(--acento)}
+.rolo{height:140px;width:62px;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;
+  text-align:center;user-select:none;-webkit-user-select:none;
   -webkit-mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent);
   mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent)}
 .rolo::-webkit-scrollbar{display:none}
 .rolo .pad{height:56px}
 .rolo .pit{height:28px;line-height:28px;scroll-snap-align:center;
   font-size:1.2rem;font-variant-numeric:tabular-nums;color:var(--texto)}
-.picker .dp{font-size:1.3rem;font-weight:700}
-.picker .faixa{position:absolute;left:24px;right:24px;top:56px;height:28px;
+.picker .dp{font-size:1.3rem;font-weight:700;align-self:center}
+.picker .faixa{position:absolute;top:50%;transform:translateY(-50%);left:22px;right:22px;height:28px;
   border-top:1px solid var(--acento);border-bottom:1px solid var(--acento);pointer-events:none}
 
 .cl h3{font-size:.95rem;margin-top:12px;color:var(--acento)}
@@ -106,7 +109,6 @@ footer{color:var(--suave);font-size:.76rem;margin-top:22px;padding-top:12px;bord
 .topobar{background:var(--marca);color:#fff;padding:16px;display:flex;align-items:center;gap:12px}
 .topobar a.voltar{color:#fff;text-decoration:none;font-size:1.3rem}
 .topobar h1{font-size:1.1rem}
-.linkLinhas{display:inline-block;margin-top:8px;color:#fff;opacity:.9;font-size:.82rem;text-decoration:underline}
 .buscaInput{width:100%;padding:12px 14px;font-size:1rem;border:1px solid var(--borda);
   border-radius:10px;background:var(--card);color:var(--texto);margin-bottom:12px}
 .buscaInput:focus{outline:2px solid var(--acento);border-color:transparent}

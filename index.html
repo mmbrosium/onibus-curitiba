@@ -12,7 +12,7 @@
   <h1>🚌 Meu trajeto</h1>
   <div class="sub">Casa (Bacacheri) ⇄ Trabalho (Centro)</div>
   <a class="linkLinhas" href="linhas.html">ver todas as linhas →</a>
-  <div class="ver">v0.4.0</div>
+  <div class="ver">v0.5.0</div>
   <div class="abas" id="abas">
     <button data-aba="ida">Ida</button>
     <button data-aba="volta" class="on">Volta</button>
@@ -23,14 +23,20 @@
 <main>
   <!-- VOLTA -->
   <div class="aba-conteudo on" id="aba-volta">
-    <div class="passo andar">
-      <div class="bolha">🚶</div><div class="titulo">Trabalho → tubo Rui Barbosa</div>
+    <div class="chipHora" id="chipHora">
+      <span class="lab">saio do trabalho às</span>
+      <span class="val" id="valHora">--:--</span>
+    </div>
+
+    <div class="passo andar" style="margin-top:14px">
+      <div class="bolha">🚶</div><div class="titulo">Sai do trabalho → tubo Rui Barbosa</div>
       <div class="detalhe">~8 min a pé</div>
+      <div class="hora-passo">chega no tubo <span id="h-rui">~--:--</span></div>
     </div>
     <div class="passo onibus">
       <div class="bolha">🚌</div><div class="titulo">Troncal — pega a que vier</div>
-      <div class="detalhe"><span class="linhaRot tronco">203</span>ou<span class="linhaRot tronco">250</span> sentido norte · ~20-25 min até o Cabral</div>
-      <div class="nota">alta frequência no pico; o feed não crava o horário dessa perna</div>
+      <div class="detalhe"><span class="linhaRot tronco">203</span>ou<span class="linhaRot tronco">250</span> sentido norte · ~20-25 min</div>
+      <div class="hora-passo">no Terminal Cabral <span id="h-cabral">~--:--</span></div>
     </div>
     <div class="passo baldeacao">
       <div class="bolha">🔄</div><div class="titulo">Baldeia no Terminal Cabral</div>
@@ -38,15 +44,12 @@
     </div>
     <div class="passo onibus">
       <div class="bolha">🚌</div><div class="titulo">Alimentadora pra casa</div>
-      <div class="chipHora" id="chipHora">
-        <span class="lab">cheguei no Cabral às</span>
-        <span class="val" id="valHora">--:--</span>
-      </div>
-      <div id="lista"><div class="detalhe" style="padding-top:8px">Carregando horários…</div></div>
+      <div class="detalhe">próximas a partir de quando você chega no Cabral:</div>
+      <div id="lista"><div class="detalhe" style="padding-top:6px">Carregando…</div></div>
     </div>
     <div class="passo andar">
       <div class="bolha">🚶</div><div class="titulo">Erasto Gaertner → casa</div>
-      <div class="nota">trecho a pé — detalhe vem com o mapa</div>
+      <div class="hora-passo">em casa <span id="h-casa">~--:--</span></div>
     </div>
     <footer id="validade">Horários reais do GTFS de Curitiba.</footer>
   </div>
@@ -59,7 +62,7 @@
     </div>
     <div class="passo onibus">
       <div class="bolha">🚌</div><div class="titulo">Na Erasto, sentido Cabral — pega a que vier</div>
-      <div class="detalhe"><span class="linhaRot alim">212</span>Solar · <span class="linhaRot alim">214</span>Tingui · <span class="linhaRot alim">211</span>Colina Verde</div>
+      <div class="detalhe"><span class="linhaRot alim">212</span>Solar · <span class="linhaRot alim">214</span>Tingui · <span class="linhaRot alim">213</span>São João</div>
       <div class="nota">embarque no meio da linha: o feed não crava horário, mas no pico passam várias por hora</div>
     </div>
     <div class="passo baldeacao">
@@ -75,7 +78,7 @@
       <div class="bolha">🚶</div><div class="titulo">Rui Barbosa → trabalho</div>
       <div class="nota">trecho a pé — detalhe vem com o mapa</div>
     </div>
-    <footer>Ida: as duas pernas são "pega a que vier" — embarque em pontos do meio da linha, que o feed não crava. Ganha horário exato com o tempo real.</footer>
+    <footer>Ida: as duas pernas são "pega a que vier" — embarque em pontos do meio da linha. Ganha horário exato com o tempo real.</footer>
   </div>
 
   <!-- CONSOLIDADO -->
@@ -86,11 +89,19 @@
 
 <div class="overlay" id="ovPicker">
   <div class="folha">
-    <h2>Cheguei no Cabral às</h2>
+    <h2>Saio do trabalho às</h2>
     <div class="picker">
-      <div class="rolo" id="roloH"></div>
+      <div class="col">
+        <button class="seta" data-r="H" data-d="-1">▲</button>
+        <div class="rolo" id="roloH"></div>
+        <button class="seta" data-r="H" data-d="1">▼</button>
+      </div>
       <span class="dp">:</span>
-      <div class="rolo" id="roloM"></div>
+      <div class="col">
+        <button class="seta" data-r="M" data-d="-1">▲</button>
+        <div class="rolo" id="roloM"></div>
+        <button class="seta" data-r="M" data-d="1">▼</button>
+      </div>
       <div class="faixa"></div>
     </div>
     <button class="ok" id="okHora">Pronto</button>
@@ -100,15 +111,16 @@
 <div class="overlay" id="ovCl">
   <div class="folha cl">
     <h2>O que mudou?</h2>
-    <h3>v0.4.0</h3>
+    <h3>v0.5.0</h3>
     <ul>
-      <li>Virada da fiação: os horários agora vêm de um arquivo de dados (<code>dados/trajeto.json</code>)
-          gerado pelo extrator — não ficam mais escritos dentro do app.</li>
+      <li>A Volta calcula a partir de "saio do trabalho às agora": estima a chegada no tubo, no Cabral e em casa.</li>
+      <li>Seletor de hora agora funciona no mouse (setas ▲▼ e scroll de 1 em 1, sem selecionar texto).</li>
+      <li>Correção: São João (213) no lugar do Colina Verde (que não passa perto de casa).</li>
     </ul>
-    <h3>v0.3.0</h3>
-    <ul><li>Aba Ida (casa → trabalho) montada.</li></ul>
-    <h3>v0.2.x</h3>
-    <ul><li>Seletor de hora (painel, circular, vai-um), 3 abas, tema roxo meia-noite, cores por tipo de linha.</li></ul>
+    <h3>v0.4.0</h3>
+    <ul><li>Virada da fiação: horários vêm de dados/trajeto.json (extrator), app separado em arquivos.</li></ul>
+    <h3>v0.3.0 / v0.2.x</h3>
+    <ul><li>Aba Ida; seletor de hora; 3 abas; tema roxo meia-noite; cores por tipo de linha.</li></ul>
     <h3>v0.1.0</h3>
     <ul><li>App base: busca das 309 linhas + extrator Python.</li></ul>
     <button class="ok" id="okCl">Fechar</button>
