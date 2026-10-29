@@ -102,6 +102,48 @@ ovCl.onclick = e => { if (e.target === ovCl) ovCl.classList.remove("on"); };
 
 // ---- mapa (Leaflet), iniciado só quando a aba Mapa é aberta ----
 let mapaIniciado = false, mapObj = null;
+let linhasLayers = [], linhaAberta = null;
+const ovLinha = document.getElementById("ovLinha");
+const linhaFolha = document.getElementById("linhaFolha");
+
+// contraste: destaca a linha tocada e apaga as outras (sem mudar a cor-base)
+function destacar(id) {
+  linhasLayers.forEach(g => {
+    const on = g.id === id;
+    if (g.casing) g.casing.setStyle({ opacity: on ? .95 : .35 });
+    if (g.solido) g.solido.setStyle({ weight: on ? 8 : 5, opacity: on ? 1 : .3 });
+    g.pontilhados.forEach(p => p.setStyle({ opacity: on ? .55 : .12 }));
+    if (g.pino && g.pino.getElement()) g.pino.getElement().style.opacity = on ? 1 : .35;
+    if (on) g.todas.forEach(ly => ly.bringToFront && ly.bringToFront());
+  });
+}
+function restaurar() {
+  linhasLayers.forEach(g => {
+    if (g.casing) g.casing.setStyle({ opacity: .9 });
+    if (g.solido) g.solido.setStyle({ weight: 5, opacity: .95 });
+    g.pontilhados.forEach(p => p.setStyle({ opacity: .45 }));
+    if (g.pino && g.pino.getElement()) g.pino.getElement().style.opacity = 1;
+  });
+}
+function abreLinha(l) {
+  if (linhaAberta === l.linha) { fechaLinha(); return; }  // tocou de novo = fecha
+  linhaAberta = l.linha; destacar(l.linha);
+  const tr = l.tipo === "tronco", cls = tr ? "tronco" : "alim";
+  const tipoTxt = tr ? "Troncal — vermelhão" : "Alimentadora — laranja";
+  const trecho = tr
+    ? "Você embarca no Tubo Rui Barbosa e desce no Terminal Cabral."
+    : "Você embarca no Terminal Cabral e desce perto de casa (Av. Erasto Gaertner).";
+  linhaFolha.innerHTML =
+    `<div class="puxador"></div>
+     <div class="linhaCab"><span class="linhaNum ${cls}">${l.linha}</span>
+       <div><div class="linhaNome">${l.nome}</div><div class="linhaTipo ${cls}">${tipoTxt}</div></div></div>
+     <p class="linhaTrecho">${trecho}</p>
+     <p class="detalhe"><b>Linha cheia</b> = o trecho que você usa · <b>pontilhado</b> = o resto do itinerário da linha.</p>`;
+  ovLinha.classList.add("on");
+}
+function fechaLinha() { ovLinha.classList.remove("on"); linhaAberta = null; restaurar(); }
+ovLinha.onclick = e => { if (e.target === ovLinha) fechaLinha(); };
+
 function initMapa() {
   if (mapaIniciado) return; mapaIniciado = true;
   mapObj = L.map("map");
@@ -113,26 +155,43 @@ function initMapa() {
     const solidos = [];
     d.linhas.forEach(l => {
       const c = cor(l.tipo);
-      // trecho que VOCÊ pega: linha cheia
       const usado = l.shape.slice(l.i_emb, l.i_des + 1);
-      solidos.push(L.polyline(usado, { color: c, weight: 5, opacity: .95 })
-        .addTo(mapObj).bindPopup(`<b>${l.linha}</b> ${l.nome}<br>trecho que você pega`));
-      // resto da linha (o ônibus faz, você não usa): pontilhado
-      const resto = { color: c, weight: 3, opacity: .45, dashArray: "3,9" };
-      const popResto = `<b>${l.linha}</b> ${l.nome}<br>a linha segue por aqui — você não usa`;
-      if (l.i_emb > 0) L.polyline(l.shape.slice(0, l.i_emb + 1), resto).addTo(mapObj).bindPopup(popResto);
-      if (l.i_des < l.shape.length - 1) L.polyline(l.shape.slice(l.i_des), resto).addTo(mapObj).bindPopup(popResto);
+      const g = { id: l.linha, todas: [], solido: null, casing: null, pontilhados: [], pino: null };
+      // casing branco embaixo: separa a linha do fundo do mapa e das outras linhas
+      const casing = L.polyline(usado, { color: "#fff", weight: 9, opacity: .9, lineCap: "round", lineJoin: "round" }).addTo(mapObj);
+      g.casing = casing; g.todas.push(casing);
+      // trecho que você pega: linha cheia (cor real da linha)
+      const solido = L.polyline(usado, { color: c, weight: 5, opacity: .95, lineCap: "round", lineJoin: "round" }).addTo(mapObj);
+      solido.on("click", () => abreLinha(l));
+      g.solido = solido; g.todas.push(solido); solidos.push(solido);
+      // resto do itinerário: pontilhado, com casing fininho pra não sumir no mapa
+      const addResto = pts => {
+        const pc = L.polyline(pts, { color: "#fff", weight: 6, opacity: .5, lineCap: "round" }).addTo(mapObj);
+        const pl = L.polyline(pts, { color: c, weight: 3, opacity: .45, dashArray: "2,8", lineCap: "round" }).addTo(mapObj);
+        pl.on("click", () => abreLinha(l));
+        g.todas.push(pc, pl); g.pontilhados.push(pl);
+      };
+      if (l.i_emb > 0) addResto(l.shape.slice(0, l.i_emb + 1));
+      if (l.i_des < l.shape.length - 1) addResto(l.shape.slice(l.i_des));
+      // pino com o número: identifica a linha sem mexer na cor do traçado
+      const mid = usado[Math.floor(usado.length / 2)];
+      const pino = L.marker(mid, { icon: L.divIcon({ className: "pino-wrap",
+        html: `<span class="pino ${l.tipo === "tronco" ? "tronco" : "alim"}">${l.linha}</span>`,
+        iconSize: [34, 20], iconAnchor: [17, 10] }) }).addTo(mapObj);
+      pino.on("click", () => abreLinha(l));
+      g.pino = pino; g.todas.push(pino);
+      linhasLayers.push(g);
     });
     d.pontos.forEach(p => L.marker([p.lat, p.lon]).addTo(mapObj).bindPopup("<b>" + p.nome + "</b>"));
     if (solidos.length) mapObj.fitBounds(L.featureGroup(solidos).getBounds().pad(0.15));
-    status.textContent = "Linha cheia = trecho que você pega; pontilhado = resto da linha. Ative a localização pra aparecer no mapa.";
+    status.textContent = "Toque numa linha (ou no número dela) pra ver os detalhes. Ative a localização pra aparecer no mapa.";
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         L.circleMarker([pos.coords.latitude, pos.coords.longitude],
           { radius: 8, color: "#fff", weight: 2, fillColor: "#2563eb", fillOpacity: 1 })
           .addTo(mapObj).bindPopup("Você está aqui");
-        status.textContent = "Sua localização está no mapa (ponto azul).";
-      }, () => { status.textContent = "Permita a localização pra ver onde você está. O trajeto já está no mapa."; });
+        status.textContent = "Sua localização está no mapa (ponto azul). Toque numa linha pra ver os detalhes.";
+      }, () => { status.textContent = "Permita a localização pra ver onde você está. Toque numa linha pra ver os detalhes."; });
     }
   }).catch(() => { status.textContent = "Não consegui carregar o mapa. Abra pela URL do GitHub Pages."; });
   setTimeout(() => mapObj.invalidateSize(), 250);

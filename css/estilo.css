@@ -121,3 +121,25 @@ footer{color:var(--suave);font-size:.76rem;margin-top:22px;padding-top:12px;bord
 .legenda{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.82rem;color:var(--suave)}
 .legenda .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:middle}
 .leaflet-popup-content{font-size:.85rem}
+
+/* pino com o número da linha no mapa (identifica sem mudar a cor do traçado) */
+.pino-wrap{background:none;border:none}
+.pino{display:inline-block;min-width:24px;text-align:center;font-size:.72rem;font-weight:800;
+  color:#fff;padding:1px 5px;border-radius:9px;border:2px solid #fff;
+  box-shadow:0 1px 3px rgba(0,0,0,.45);font-variant-numeric:tabular-nums;transition:opacity .15s}
+.pino.tronco{background:var(--tronco)}
+.pino.alim{background:var(--alim)}
+
+/* gaveta da linha (backdrop leve pra enxergar o destaque no mapa) */
+.overlay.leve{background:rgba(0,0,0,.18)}
+.puxador{width:40px;height:4px;border-radius:2px;background:var(--borda);margin:0 auto 12px}
+.linhaCab{display:flex;align-items:center;gap:12px}
+.linhaNum{font-size:1.3rem;font-weight:800;color:#fff;padding:4px 12px;border-radius:10px;
+  font-variant-numeric:tabular-nums}
+.linhaNum.tronco{background:var(--tronco)}
+.linhaNum.alim{background:var(--alim)}
+.linhaNome{font-weight:700;font-size:1.02rem}
+.linhaTipo{font-size:.8rem;font-weight:600}
+.linhaTipo.tronco{color:var(--tronco)}
+.linhaTipo.alim{color:var(--alim)}
+.linhaTrecho{margin-top:12px;font-size:.9rem}
