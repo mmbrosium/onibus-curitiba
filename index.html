@@ -14,7 +14,7 @@
   <h1>🚌 Meu trajeto</h1>
   <div class="sub">Casa (Bacacheri) ⇄ Trabalho (Centro)</div>
   <a class="linkLinhas" href="linhas.html">ver todas as linhas →</a>
-  <div class="ver">v0.7.0</div>
+  <div class="ver">v0.8.0</div>
   <div class="abas" id="abas">
     <button data-aba="ida">Ida</button>
     <button data-aba="volta" class="on">Volta</button>
@@ -97,10 +97,15 @@
       <span><i class="sw" style="background:var(--alim)"></i> Alimentadora</span>
       <span>━ trecho que você pega &nbsp; ┈ resto da linha</span>
       <span><i class="sw" style="background:#2563eb"></i> Você</span>
+      <span>Toque na linha (ou no número) pra ver os detalhes.</span>
     </div>
     <p class="detalhe" id="mapaStatus" style="margin-top:8px">Carregando mapa…</p>
   </div>
 </main>
+
+<div class="overlay leve" id="ovLinha">
+  <div class="folha" id="linhaFolha"></div>
+</div>
 
 <div class="overlay" id="ovPicker">
   <div class="folha">
@@ -126,6 +131,12 @@
 <div class="overlay" id="ovCl">
   <div class="folha cl">
     <h2>O que mudou?</h2>
+    <h3>v0.8.0</h3>
+    <ul>
+      <li>Mapa com <b>mais contraste</b>: cada traçado ganhou um contorno branco pra separar do fundo e das outras linhas (a cor real da linha fica igual).</li>
+      <li>Cada linha agora tem um <b>pino com o número</b> no mapa — bate o olho e já sabe qual é qual.</li>
+      <li>Toque numa linha e sobe uma <b>gaveta</b> com os detalhes dela (número, nome, sentido); toque de novo ou pra fora pra fechar.</li>
+    </ul>
     <h3>v0.7.0</h3>
     <ul>
       <li>Mapa: traçado agora <b>segue as ruas</b> (não corta mais quarteirões), com o trecho que você pega em linha cheia e o resto da linha pontilhado.</li>

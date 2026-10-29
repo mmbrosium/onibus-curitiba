@@ -2,6 +2,19 @@
 
 Formato baseado em "Keep a Changelog".
 
+## [0.8.0] — 2026-10-29
+### Adicionado
+- **Contraste no mapa**: cada traçado ganhou um **contorno branco** (técnica de mapa de metrô)
+  que separa a linha do fundo e das outras linhas. A cor real da linha (vermelhão/laranja) não mudou.
+- **Pino com o número** de cada linha no mapa — identifica qual é qual sem precisar tocar.
+- **Gaveta da linha**: toca no traçado (ou no número) e sobe uma gaveta com os detalhes
+  (número, nome, tipo, sentido); toca de novo ou pra fora pra fechar. A linha tocada fica
+  destacada no mapa e as outras apagam.
+
+### Planejado (próximo)
+- Layout unificado: mapa em cima + trajeto embaixo numa tela só; casa/trabalho no topo.
+- Mapa em dois modos: detalhado (atual) e resumido (padrão).
+
 ## [0.7.0] — 2026-10-29
 ### Melhorado (mapa "sério")
 - O traçado agora usa os **shapes reais** do GTFS (casados a cada linha por proximidade),
