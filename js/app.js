@@ -110,12 +110,22 @@ function initMapa() {
   const status = document.getElementById("mapaStatus");
   fetch("dados/mapa.json").then(r => r.json()).then(d => {
     const cor = t => t === "tronco" ? "#dc2626" : "#ea580c";
-    const traços = d.linhas.map(l =>
-      L.polyline(l.coords, { color: cor(l.tipo), weight: 4, opacity: .85 })
-        .addTo(mapObj).bindPopup(`<b>${l.linha}</b> ${l.nome}`));
+    const solidos = [];
+    d.linhas.forEach(l => {
+      const c = cor(l.tipo);
+      // trecho que VOCÊ pega: linha cheia
+      const usado = l.shape.slice(l.i_emb, l.i_des + 1);
+      solidos.push(L.polyline(usado, { color: c, weight: 5, opacity: .95 })
+        .addTo(mapObj).bindPopup(`<b>${l.linha}</b> ${l.nome}<br>trecho que você pega`));
+      // resto da linha (o ônibus faz, você não usa): pontilhado
+      const resto = { color: c, weight: 3, opacity: .45, dashArray: "3,9" };
+      const popResto = `<b>${l.linha}</b> ${l.nome}<br>a linha segue por aqui — você não usa`;
+      if (l.i_emb > 0) L.polyline(l.shape.slice(0, l.i_emb + 1), resto).addTo(mapObj).bindPopup(popResto);
+      if (l.i_des < l.shape.length - 1) L.polyline(l.shape.slice(l.i_des), resto).addTo(mapObj).bindPopup(popResto);
+    });
     d.pontos.forEach(p => L.marker([p.lat, p.lon]).addTo(mapObj).bindPopup("<b>" + p.nome + "</b>"));
-    if (traços.length) mapObj.fitBounds(L.featureGroup(traços).getBounds().pad(0.12));
-    status.textContent = "Toque numa linha pra ver qual é. Ative a localização pra aparecer no mapa.";
+    if (solidos.length) mapObj.fitBounds(L.featureGroup(solidos).getBounds().pad(0.15));
+    status.textContent = "Linha cheia = trecho que você pega; pontilhado = resto da linha. Ative a localização pra aparecer no mapa.";
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         L.circleMarker([pos.coords.latitude, pos.coords.longitude],

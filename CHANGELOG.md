@@ -2,6 +2,21 @@
 
 Formato baseado em "Keep a Changelog".
 
+## [0.7.0] — 2026-10-29
+### Melhorado (mapa "sério")
+- O traçado agora usa os **shapes reais** do GTFS (casados a cada linha por proximidade),
+  então **segue as ruas** em vez de ligar paradas em linha reta (não corta mais quarteirões/parques).
+- Cada linha é desenhada em **duas partes**: o **trecho que você usa** em linha cheia e o
+  **resto do percurso** (que o ônibus faz, mas você não pega) em **pontilhado**.
+
+### Corrigido
+- Ponto da **casa** estava caindo na Praça Rui Barbosa (a busca "Erasto Gaertner" pegava uma
+  plataforma de lá); agora aponta pra Av. Erasto Gaertner, no Bacacheri.
+
+### Pendente (v0.8)
+- Trecho a pé em azul e layout novo (mapa grande + trajeto embaixo), que dependem de
+  configurar as coordenadas exatas de casa/trabalho.
+
 ## [0.6.0] — 2026-10-28
 ### Adicionado
 - Nova aba **Mapa**: desenha o traçado do trajeto (troncal 203 em vermelho, alimentadoras em laranja),
