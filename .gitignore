@@ -1,0 +1,7 @@
+# Não subir o GTFS cru (é pesado; o app só usa os dados/ enxutos)
+feed/
+*.zip
+
+# Lixo do Python
+__pycache__/
+*.pyc

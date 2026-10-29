@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ônibus Curitiba — meu trajeto</title>
 <link rel="stylesheet" href="css/estilo.css">
+<link rel="stylesheet" href="libs/leaflet/leaflet.css">
+<script src="libs/leaflet/leaflet.js"></script>
 </head>
 <body>
 <header>
@@ -12,11 +14,12 @@
   <h1>🚌 Meu trajeto</h1>
   <div class="sub">Casa (Bacacheri) ⇄ Trabalho (Centro)</div>
   <a class="linkLinhas" href="linhas.html">ver todas as linhas →</a>
-  <div class="ver">v0.5.0</div>
+  <div class="ver">v0.6.0</div>
   <div class="abas" id="abas">
     <button data-aba="ida">Ida</button>
     <button data-aba="volta" class="on">Volta</button>
     <button data-aba="consolidado">Consolidado</button>
+    <button data-aba="mapa">Mapa</button>
   </div>
 </header>
 
@@ -85,6 +88,17 @@
   <div class="aba-conteudo" id="aba-consolidado">
     <div class="vazio">🚧 Consolidado = teu dia inteiro (ida + volta) num resumo, cada trajeto numa cor. Próximo marco.</div>
   </div>
+
+  <!-- MAPA -->
+  <div class="aba-conteudo" id="aba-mapa">
+    <div id="map"></div>
+    <div class="legenda">
+      <span><i class="sw" style="background:var(--tronco)"></i> Troncal (203)</span>
+      <span><i class="sw" style="background:var(--alim)"></i> Alimentadoras</span>
+      <span><i class="sw" style="background:#2563eb"></i> Você</span>
+    </div>
+    <p class="detalhe" id="mapaStatus" style="margin-top:8px">Carregando mapa…</p>
+  </div>
 </main>
 
 <div class="overlay" id="ovPicker">
@@ -111,6 +125,10 @@
 <div class="overlay" id="ovCl">
   <div class="folha cl">
     <h2>O que mudou?</h2>
+    <h3>v0.6.0</h3>
+    <ul>
+      <li>Nova aba <b>Mapa</b>: o traçado do trajeto (troncal e alimentadoras) e a sua localização atual.</li>
+    </ul>
     <h3>v0.5.0</h3>
     <ul>
       <li>A Volta calcula a partir de "saio do trabalho às agora": estima a chegada no tubo, no Cabral e em casa.</li>

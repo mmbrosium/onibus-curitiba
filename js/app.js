@@ -100,10 +100,39 @@ document.getElementById("btnConfig").onclick = () => ovCl.classList.add("on");
 document.getElementById("okCl").onclick = () => ovCl.classList.remove("on");
 ovCl.onclick = e => { if (e.target === ovCl) ovCl.classList.remove("on"); };
 
+// ---- mapa (Leaflet), iniciado só quando a aba Mapa é aberta ----
+let mapaIniciado = false, mapObj = null;
+function initMapa() {
+  if (mapaIniciado) return; mapaIniciado = true;
+  mapObj = L.map("map");
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(mapObj);
+  const status = document.getElementById("mapaStatus");
+  fetch("dados/mapa.json").then(r => r.json()).then(d => {
+    const cor = t => t === "tronco" ? "#dc2626" : "#ea580c";
+    const traços = d.linhas.map(l =>
+      L.polyline(l.coords, { color: cor(l.tipo), weight: 4, opacity: .85 })
+        .addTo(mapObj).bindPopup(`<b>${l.linha}</b> ${l.nome}`));
+    d.pontos.forEach(p => L.marker([p.lat, p.lon]).addTo(mapObj).bindPopup("<b>" + p.nome + "</b>"));
+    if (traços.length) mapObj.fitBounds(L.featureGroup(traços).getBounds().pad(0.12));
+    status.textContent = "Toque numa linha pra ver qual é. Ative a localização pra aparecer no mapa.";
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        L.circleMarker([pos.coords.latitude, pos.coords.longitude],
+          { radius: 8, color: "#fff", weight: 2, fillColor: "#2563eb", fillOpacity: 1 })
+          .addTo(mapObj).bindPopup("Você está aqui");
+        status.textContent = "Sua localização está no mapa (ponto azul).";
+      }, () => { status.textContent = "Permita a localização pra ver onde você está. O trajeto já está no mapa."; });
+    }
+  }).catch(() => { status.textContent = "Não consegui carregar o mapa. Abra pela URL do GitHub Pages."; });
+  setTimeout(() => mapObj.invalidateSize(), 250);
+}
+
 document.getElementById("abas").addEventListener("click", e => {
   const aba = e.target.dataset.aba; if (!aba) return;
   document.querySelectorAll(".abas button").forEach(b => b.classList.toggle("on", b.dataset.aba === aba));
   document.querySelectorAll(".aba-conteudo").forEach(c => c.classList.toggle("on", c.id === "aba-" + aba));
+  if (aba === "mapa") { initMapa(); if (mapObj) setTimeout(() => mapObj.invalidateSize(), 120); }
 });
 
 // ---- carrega os dados e liga tudo ----

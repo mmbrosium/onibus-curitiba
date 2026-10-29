@@ -2,6 +2,18 @@
 
 Formato baseado em "Keep a Changelog".
 
+## [0.6.0] — 2026-10-28
+### Adicionado
+- Nova aba **Mapa**: desenha o traçado do trajeto (troncal 203 em vermelho, alimentadoras em laranja),
+  marca os pontos-chave (Rui Barbosa, Terminal Cabral, casa/Erasto) e mostra a **sua localização atual**
+  (ponto azul, via GPS do navegador — pede permissão).
+- Novo extrator `extrair_mapa.py`, que gera `dados/mapa.json` (traçado via pontos de parada).
+- Biblioteca de mapa **Leaflet embutida no repo** (`libs/leaflet/`) — não depende de CDN externo.
+
+### Nota
+- O traçado é montado ligando os pontos de parada (o feed não liga os "shapes" às linhas), então segue
+  a forma da rota, não a curva exata da rua. O mapa-base vem do OpenStreetMap.
+
 ## [0.5.0] — 2026-10-28
 ### Adicionado
 - A Volta agora **calcula a partir de "saio do trabalho às agora"**: estima a chegada no
