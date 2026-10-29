@@ -12,101 +12,130 @@
 <header>
   <button class="engren" id="btnConfig" aria-label="config">⚙️</button>
   <h1>🚌 Meu trajeto</h1>
-  <div class="sub">Casa (Bacacheri) ⇄ Trabalho (Centro)</div>
+  <div class="sub">Casa ⇄ Trabalho · Curitiba</div>
   <a class="linkLinhas" href="linhas.html">ver todas as linhas →</a>
-  <div class="ver">v0.8.0</div>
+  <div class="ver">v0.9.0</div>
+
+  <div class="locbar" id="locbar">
+    <button class="locchip" id="chipCasa"><span class="ic">🏠</span><span class="txt">definir casa</span></button>
+    <button class="locchip" id="chipTrab"><span class="ic">💼</span><span class="txt">definir trabalho</span></button>
+  </div>
+
   <div class="abas" id="abas">
     <button data-aba="ida">Ida</button>
     <button data-aba="volta" class="on">Volta</button>
     <button data-aba="consolidado">Consolidado</button>
-    <button data-aba="mapa">Mapa</button>
   </div>
 </header>
 
 <main>
-  <!-- VOLTA -->
-  <div class="aba-conteudo on" id="aba-volta">
-    <div class="chipHora" id="chipHora">
-      <span class="lab">saio do trabalho às</span>
-      <span class="val" id="valHora">--:--</span>
+  <!-- FAIXA MAPA (compartilhada entre Ida e Volta) -->
+  <section class="faixa" id="faixaMapa">
+    <button class="faixaCab" aria-label="recolher mapa"><span>🗺️ Mapa</span><span class="chev">▾</span></button>
+    <div class="faixaCorpo">
+      <div id="map"></div>
+      <div class="legenda">
+        <span><i class="sw" style="background:var(--tronco)"></i> Troncal</span>
+        <span><i class="sw" style="background:var(--alim)"></i> Alimentadora</span>
+        <span>━ trecho que você pega &nbsp; ┈ resto da linha</span>
+        <span><i class="sw" style="background:#2563eb"></i> Você</span>
+        <span>Toque na linha (ou no número) pra ver os detalhes.</span>
+      </div>
+      <p class="detalhe" id="mapaStatus" style="margin-top:8px">Carregando mapa…</p>
     </div>
+  </section>
 
-    <div class="passo andar" style="margin-top:14px">
-      <div class="bolha">🚶</div><div class="titulo">Sai do trabalho → tubo Rui Barbosa</div>
-      <div class="detalhe">~8 min a pé</div>
-      <div class="hora-passo">chega no tubo <span id="h-rui">~--:--</span></div>
-    </div>
-    <div class="passo onibus">
-      <div class="bolha">🚌</div><div class="titulo">Troncal — pega a que vier</div>
-      <div class="detalhe"><span class="linhaRot tronco">203</span>ou<span class="linhaRot tronco">250</span> sentido norte · ~20-25 min</div>
-      <div class="hora-passo">no Terminal Cabral <span id="h-cabral">~--:--</span></div>
-    </div>
-    <div class="passo baldeacao">
-      <div class="bolha">🔄</div><div class="titulo">Baldeia no Terminal Cabral</div>
-      <span class="selo">✓ 1 passagem só</span>
-    </div>
-    <div class="passo onibus">
-      <div class="bolha">🚌</div><div class="titulo">Alimentadora pra casa</div>
-      <div class="detalhe">próximas a partir de quando você chega no Cabral:</div>
-      <div id="lista"><div class="detalhe" style="padding-top:6px">Carregando…</div></div>
-    </div>
-    <div class="passo andar">
-      <div class="bolha">🚶</div><div class="titulo">Erasto Gaertner → casa</div>
-      <div class="hora-passo">em casa <span id="h-casa">~--:--</span></div>
-    </div>
-    <footer id="validade">Horários reais do GTFS de Curitiba.</footer>
-  </div>
+  <!-- FAIXA TRAJETO (muda por aba) -->
+  <section class="faixa" id="faixaTrajeto">
+    <button class="faixaCab" aria-label="recolher trajeto"><span>🧭 Trajeto</span><span class="chev">▾</span></button>
+    <div class="faixaCorpo">
 
-  <!-- IDA -->
-  <div class="aba-conteudo" id="aba-ida">
-    <div class="passo andar">
-      <div class="bolha">🚶</div><div class="titulo">Casa → Av. Erasto Gaertner</div>
-      <div class="detalhe">~a pé até o ponto</div>
-    </div>
-    <div class="passo onibus">
-      <div class="bolha">🚌</div><div class="titulo">Na Erasto, sentido Cabral — pega a que vier</div>
-      <div class="detalhe"><span class="linhaRot alim">212</span>Solar · <span class="linhaRot alim">214</span>Tingui · <span class="linhaRot alim">213</span>São João</div>
-      <div class="nota">embarque no meio da linha: o feed não crava horário, mas no pico passam várias por hora</div>
-    </div>
-    <div class="passo baldeacao">
-      <div class="bolha">🔄</div><div class="titulo">Baldeia no Terminal Cabral</div>
-      <span class="selo">✓ 1 passagem só</span>
-    </div>
-    <div class="passo onibus">
-      <div class="bolha">🚌</div><div class="titulo">Troncal sentido centro</div>
-      <div class="detalhe"><span class="linhaRot tronco">203</span>ou<span class="linhaRot tronco">250</span> → desce no tubo Rui Barbosa</div>
-      <div class="nota">pega a que vier; alta frequência</div>
-    </div>
-    <div class="passo andar">
-      <div class="bolha">🚶</div><div class="titulo">Rui Barbosa → trabalho</div>
-      <div class="nota">trecho a pé — detalhe vem com o mapa</div>
-    </div>
-    <footer>Ida: as duas pernas são "pega a que vier" — embarque em pontos do meio da linha. Ganha horário exato com o tempo real.</footer>
-  </div>
+      <!-- VOLTA -->
+      <div class="aba-conteudo on" id="aba-volta">
+        <div class="chipHora" id="chipHora">
+          <span class="lab">saio do trabalho às</span>
+          <span class="val" id="valHora">--:--</span>
+        </div>
 
-  <!-- CONSOLIDADO -->
-  <div class="aba-conteudo" id="aba-consolidado">
-    <div class="vazio">🚧 Consolidado = teu dia inteiro (ida + volta) num resumo, cada trajeto numa cor. Próximo marco.</div>
-  </div>
+        <div class="passo andar" style="margin-top:14px">
+          <div class="bolha">🚶</div><div class="titulo">Sai do trabalho → tubo Rui Barbosa</div>
+          <div class="detalhe">~8 min a pé</div>
+          <div class="hora-passo">chega no tubo <span id="h-rui">~--:--</span></div>
+        </div>
+        <div class="passo onibus">
+          <div class="bolha">🚌</div><div class="titulo">Troncal — pega a que vier</div>
+          <div class="detalhe"><span class="linhaRot tronco">203</span>ou<span class="linhaRot tronco">250</span> sentido norte · ~20-25 min</div>
+          <div class="hora-passo">no Terminal Cabral <span id="h-cabral">~--:--</span></div>
+        </div>
+        <div class="passo baldeacao">
+          <div class="bolha">🔄</div><div class="titulo">Baldeia no Terminal Cabral</div>
+          <span class="selo">✓ 1 passagem só</span>
+        </div>
+        <div class="passo onibus">
+          <div class="bolha">🚌</div><div class="titulo">Alimentadora pra casa</div>
+          <div class="detalhe">próximas a partir de quando você chega no Cabral:</div>
+          <div id="lista"><div class="detalhe" style="padding-top:6px">Carregando…</div></div>
+        </div>
+        <div class="passo andar">
+          <div class="bolha">🚶</div><div class="titulo">Erasto Gaertner → casa</div>
+          <div class="hora-passo">em casa <span id="h-casa">~--:--</span></div>
+        </div>
+        <footer id="validade">Horários reais do GTFS de Curitiba.</footer>
+      </div>
 
-  <!-- MAPA -->
-  <div class="aba-conteudo" id="aba-mapa">
-    <div id="map"></div>
-    <div class="legenda">
-      <span><i class="sw" style="background:var(--tronco)"></i> Troncal</span>
-      <span><i class="sw" style="background:var(--alim)"></i> Alimentadora</span>
-      <span>━ trecho que você pega &nbsp; ┈ resto da linha</span>
-      <span><i class="sw" style="background:#2563eb"></i> Você</span>
-      <span>Toque na linha (ou no número) pra ver os detalhes.</span>
+      <!-- IDA -->
+      <div class="aba-conteudo" id="aba-ida">
+        <div class="passo andar">
+          <div class="bolha">🚶</div><div class="titulo">Casa → Av. Erasto Gaertner</div>
+          <div class="detalhe">~a pé até o ponto</div>
+        </div>
+        <div class="passo onibus">
+          <div class="bolha">🚌</div><div class="titulo">Na Erasto, sentido Cabral — pega a que vier</div>
+          <div class="detalhe"><span class="linhaRot alim">212</span>Solar · <span class="linhaRot alim">214</span>Tingui · <span class="linhaRot alim">213</span>São João</div>
+          <div class="nota">embarque no meio da linha: o feed não crava horário, mas no pico passam várias por hora</div>
+        </div>
+        <div class="passo baldeacao">
+          <div class="bolha">🔄</div><div class="titulo">Baldeia no Terminal Cabral</div>
+          <span class="selo">✓ 1 passagem só</span>
+        </div>
+        <div class="passo onibus">
+          <div class="bolha">🚌</div><div class="titulo">Troncal sentido centro</div>
+          <div class="detalhe"><span class="linhaRot tronco">203</span>ou<span class="linhaRot tronco">250</span> → desce no tubo Rui Barbosa</div>
+          <div class="nota">pega a que vier; alta frequência</div>
+        </div>
+        <div class="passo andar">
+          <div class="bolha">🚶</div><div class="titulo">Rui Barbosa → trabalho</div>
+          <div class="nota">trecho a pé — detalhe vem com o mapa</div>
+        </div>
+        <footer>Ida: as duas pernas são "pega a que vier" — embarque em pontos do meio da linha. Ganha horário exato com o tempo real.</footer>
+      </div>
+
+      <!-- CONSOLIDADO -->
+      <div class="aba-conteudo" id="aba-consolidado">
+        <div class="vazio">🚧 Consolidado = teu dia inteiro (ida + volta) num resumo, cada trajeto numa cor. Próximo marco.</div>
+      </div>
+
     </div>
-    <p class="detalhe" id="mapaStatus" style="margin-top:8px">Carregando mapa…</p>
-  </div>
+  </section>
 </main>
 
+<!-- gaveta: definir casa/trabalho -->
+<div class="overlay" id="ovLoc">
+  <div class="folha">
+    <div class="puxador"></div>
+    <h2 id="locTitulo">Definir</h2>
+    <input class="buscaInput" id="locInput" placeholder="Ex.: Rua Nicarágua, 1701, Bacacheri" autocomplete="off">
+    <p class="detalhe" id="locMsg">Digite o endereço. Localizo no mapa e salvo no seu navegador.</p>
+    <button class="ok" id="locSalvar">Salvar</button>
+  </div>
+</div>
+
+<!-- gaveta: detalhe da linha -->
 <div class="overlay leve" id="ovLinha">
   <div class="folha" id="linhaFolha"></div>
 </div>
 
+<!-- gaveta: seletor de hora -->
 <div class="overlay" id="ovPicker">
   <div class="folha">
     <h2>Saio do trabalho às</h2>
@@ -122,42 +151,35 @@
         <div class="rolo" id="roloM"></div>
         <button class="seta" data-r="M" data-d="1">▼</button>
       </div>
-      <div class="faixa"></div>
+      <div class="faixa-sel"></div>
     </div>
     <button class="ok" id="okHora">Pronto</button>
   </div>
 </div>
 
+<!-- gaveta: changelog -->
 <div class="overlay" id="ovCl">
   <div class="folha cl">
     <h2>O que mudou?</h2>
+    <h3>v0.9.0</h3>
+    <ul>
+      <li>Layout novo: o <b>mapa</b> virou faixa de cima (nas duas abas) e o <b>trajeto</b> a de baixo — as duas recolhem feito gaveta.</li>
+      <li>Topo com <b>Casa</b> e <b>Trabalho</b>: começa vazio, você preenche, e fica salvo no navegador. O endereço vira um pino no mapa.</li>
+    </ul>
     <h3>v0.8.0</h3>
     <ul>
-      <li>Mapa com <b>mais contraste</b>: cada traçado ganhou um contorno branco pra separar do fundo e das outras linhas (a cor real da linha fica igual).</li>
-      <li>Cada linha agora tem um <b>pino com o número</b> no mapa — bate o olho e já sabe qual é qual.</li>
-      <li>Toque numa linha e sobe uma <b>gaveta</b> com os detalhes dela (número, nome, sentido); toque de novo ou pra fora pra fechar.</li>
+      <li>Mapa com mais contraste (contorno branco + pino com o número da linha) e gaveta com os detalhes ao tocar na linha.</li>
     </ul>
     <h3>v0.7.0</h3>
     <ul>
-      <li>Mapa: traçado agora <b>segue as ruas</b> (não corta mais quarteirões), com o trecho que você pega em linha cheia e o resto da linha pontilhado.</li>
-      <li>Corrigido o ponto da casa (estava caindo na Rui Barbosa; agora no Bacacheri).</li>
+      <li>Mapa: traçado segue as ruas (não corta quarteirões); trecho usado em linha cheia, resto pontilhado. Casa corrigida pro Bacacheri.</li>
     </ul>
-    <h3>v0.6.0</h3>
+    <h3>v0.6.0 / v0.5.0</h3>
     <ul>
-      <li>Nova aba <b>Mapa</b>: o traçado do trajeto (troncal e alimentadoras) e a sua localização atual.</li>
+      <li>Aba Mapa; Volta calculada a partir de "saio do trabalho às"; seletor de hora no mouse; São João (213) no lugar do Colina Verde.</li>
     </ul>
-    <h3>v0.5.0</h3>
-    <ul>
-      <li>A Volta calcula a partir de "saio do trabalho às agora": estima a chegada no tubo, no Cabral e em casa.</li>
-      <li>Seletor de hora agora funciona no mouse (setas ▲▼ e scroll de 1 em 1, sem selecionar texto).</li>
-      <li>Correção: São João (213) no lugar do Colina Verde (que não passa perto de casa).</li>
-    </ul>
-    <h3>v0.4.0</h3>
-    <ul><li>Virada da fiação: horários vêm de dados/trajeto.json (extrator), app separado em arquivos.</li></ul>
-    <h3>v0.3.0 / v0.2.x</h3>
-    <ul><li>Aba Ida; seletor de hora; 3 abas; tema roxo meia-noite; cores por tipo de linha.</li></ul>
-    <h3>v0.1.0</h3>
-    <ul><li>App base: busca das 309 linhas + extrator Python.</li></ul>
+    <h3>v0.4.0 e antes</h3>
+    <ul><li>Virada da fiação (horários em JSON); 3 abas; tema roxo meia-noite; busca das 309 linhas + extrator Python.</li></ul>
     <button class="ok" id="okCl">Fechar</button>
   </div>
 </div>

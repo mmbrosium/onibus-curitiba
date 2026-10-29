@@ -2,6 +2,22 @@
 
 Formato baseado em "Keep a Changelog".
 
+## [0.9.0] — 2026-10-29
+### Mudança de layout
+- **Tela unificada**: o **mapa** virou a faixa de cima (visível nas duas abas, Ida e Volta) e o
+  **trajeto** passo a passo a faixa de baixo. As duas são **gaveta** — recolhem/expandem pra focar
+  no que você quer.
+- A aba separada "Mapa" saiu: o mapa agora é compartilhado pelas duas abas (mesmo traçado; o que
+  muda é o sentido descrito no passo a passo).
+
+### Adicionado
+- Barra de **Casa / Trabalho** no topo. Vem **vazia**; você preenche o endereço, ele é **salvo no
+  navegador** (localStorage) e vira um **pino no mapa** (geocodificado na base aberta do OpenStreetMap).
+
+### Observação
+- Por enquanto o endereço só marca o pino no mapa — ainda **não recalcula a rota** (quais linhas/pontos)
+  a partir dele; isso é o roteador, próximo passo. O trajeto segue o fixo (Rui Barbosa → Cabral → Erasto).
+
 ## [0.8.0] — 2026-10-29
 ### Adicionado
 - **Contraste no mapa**: cada traçado ganhou um **contorno branco** (técnica de mapa de metrô)
