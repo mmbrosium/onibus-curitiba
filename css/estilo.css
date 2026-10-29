@@ -115,3 +115,9 @@ footer{color:var(--suave);font-size:.76rem;margin-top:22px;padding-top:12px;bord
 .linhaItem{background:var(--card);border:1px solid var(--borda);border-radius:10px;
   padding:12px 14px;display:flex;gap:12px;align-items:center;margin-bottom:8px}
 .linhaItem .id{font-weight:700;color:var(--acento);min-width:48px}
+
+/* ---- aba Mapa ---- */
+#map{height:380px;border-radius:12px;border:1px solid var(--borda);z-index:0}
+.legenda{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.82rem;color:var(--suave)}
+.legenda .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:middle}
+.leaflet-popup-content{font-size:.85rem}
