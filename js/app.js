@@ -184,6 +184,7 @@ function initMapa() {
     });
     d.pontos.forEach(p => L.marker([p.lat, p.lon]).addTo(mapObj).bindPopup("<b>" + p.nome + "</b>"));
     if (solidos.length) mapObj.fitBounds(L.featureGroup(solidos).getBounds().pad(0.15));
+    colocaPinos();
     status.textContent = "Toque numa linha (ou no número dela) pra ver os detalhes. Ative a localização pra aparecer no mapa.";
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
@@ -197,17 +198,103 @@ function initMapa() {
   setTimeout(() => mapObj.invalidateSize(), 250);
 }
 
+// trocar de aba só muda o conteúdo do trajeto (o mapa é compartilhado)
 document.getElementById("abas").addEventListener("click", e => {
   const aba = e.target.dataset.aba; if (!aba) return;
   document.querySelectorAll(".abas button").forEach(b => b.classList.toggle("on", b.dataset.aba === aba));
-  document.querySelectorAll(".aba-conteudo").forEach(c => c.classList.toggle("on", c.id === "aba-" + aba));
-  if (aba === "mapa") { initMapa(); if (mapObj) setTimeout(() => mapObj.invalidateSize(), 120); }
+  document.querySelectorAll("#faixaTrajeto .aba-conteudo").forEach(c => c.classList.toggle("on", c.id === "aba-" + aba));
 });
+
+// faixas recolhíveis (gaveta): mapa em cima, trajeto embaixo
+document.querySelectorAll(".faixaCab").forEach(b => {
+  b.onclick = () => {
+    const sec = b.closest(".faixa");
+    sec.classList.toggle("recolhida");
+    if (sec.id === "faixaMapa" && mapObj && !sec.classList.contains("recolhida"))
+      setTimeout(() => mapObj.invalidateSize(), 210);
+  };
+});
+
+// ---- Casa / Trabalho: salvo no navegador (localStorage) + pino no mapa ----
+const LOC = { casa: null, trabalho: null };
+let pinCasa = null, pinTrab = null, tipoEdit = null;
+const ovLoc = document.getElementById("ovLoc");
+const locInput = document.getElementById("locInput");
+const locMsg = document.getElementById("locMsg");
+const locTitulo = document.getElementById("locTitulo");
+const curto = q => q.split(",").slice(0, 2).join(",").trim();
+
+function carregaLoc() {
+  try {
+    LOC.casa = JSON.parse(localStorage.getItem("oc_casa") || "null");
+    LOC.trabalho = JSON.parse(localStorage.getItem("oc_trabalho") || "null");
+  } catch (e) {}
+  pintaChips();
+}
+function pintaChips() {
+  const setChip = (id, rec, vazio) => {
+    const el = document.getElementById(id);
+    el.querySelector(".txt").textContent = rec ? rec.label : vazio;
+    el.classList.toggle("set", !!rec);
+  };
+  setChip("chipCasa", LOC.casa, "definir casa");
+  setChip("chipTrab", LOC.trabalho, "definir trabalho");
+}
+function colocaPinos() {
+  if (!mapObj) return;
+  const mk = (rec, emoji, nome) => L.marker([rec.lat, rec.lon], {
+    icon: L.divIcon({ className: "pino-wrap", html: `<span class="pinoLoc">${emoji}</span>`, iconSize: [30, 30], iconAnchor: [15, 30] })
+  }).addTo(mapObj).bindPopup(`<b>${nome}</b><br>${rec.endereco}`);
+  if (pinCasa) { mapObj.removeLayer(pinCasa); pinCasa = null; }
+  if (pinTrab) { mapObj.removeLayer(pinTrab); pinTrab = null; }
+  if (LOC.casa && LOC.casa.lat != null) pinCasa = mk(LOC.casa, "🏠", "Casa");
+  if (LOC.trabalho && LOC.trabalho.lat != null) pinTrab = mk(LOC.trabalho, "💼", "Trabalho");
+}
+function abreLoc(tipo) {
+  tipoEdit = tipo;
+  locTitulo.textContent = tipo === "casa" ? "Definir casa" : "Definir trabalho";
+  const atual = LOC[tipo];
+  locInput.value = atual ? (atual.endereco || atual.label) : "";
+  locMsg.textContent = "Digite o endereço. Localizo no mapa e salvo no seu navegador.";
+  ovLoc.classList.add("on");
+  setTimeout(() => locInput.focus(), 120);
+}
+document.getElementById("chipCasa").onclick = () => abreLoc("casa");
+document.getElementById("chipTrab").onclick = () => abreLoc("trabalho");
+ovLoc.onclick = e => { if (e.target === ovLoc) ovLoc.classList.remove("on"); };
+
+document.getElementById("locSalvar").onclick = async () => {
+  const q = locInput.value.trim();
+  if (!q) { locMsg.textContent = "Digite um endereço."; return; }
+  locMsg.textContent = "Localizando…";
+  let lat = null, lon = null;
+  try {
+    const u = "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=br&q="
+      + encodeURIComponent(q + ", Curitiba, PR");
+    const r = await fetch(u, { headers: { "Accept-Language": "pt-BR" } });
+    const j = await r.json();
+    if (j && j.length) { lat = +j[0].lat; lon = +j[0].lon; }
+  } catch (e) {}
+  const rec = { label: curto(q), endereco: q, lat, lon };
+  LOC[tipoEdit] = rec;
+  try { localStorage.setItem("oc_" + tipoEdit, JSON.stringify(rec)); } catch (e) {}
+  pintaChips();
+  colocaPinos();
+  if (lat == null) {
+    locMsg.textContent = "Salvei o endereço, mas não achei no mapa agora (pode ser a conexão). Dá pra tentar de novo depois.";
+  } else {
+    if (mapObj) mapObj.panTo([lat, lon]);
+    ovLoc.classList.remove("on");
+  }
+};
 
 // ---- carrega os dados e liga tudo ----
 buildCirc(roloH, 24); buildCirc(roloM, 60);
 const agora = new Date();
 selH = agora.getHours(); selM = agora.getMinutes();
+
+carregaLoc();
+initMapa();
 
 fetch("dados/trajeto.json")
   .then(r => r.json())
