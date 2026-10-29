@@ -14,7 +14,7 @@
   <h1>🚌 Meu trajeto</h1>
   <div class="sub">Casa (Bacacheri) ⇄ Trabalho (Centro)</div>
   <a class="linkLinhas" href="linhas.html">ver todas as linhas →</a>
-  <div class="ver">v0.6.0</div>
+  <div class="ver">v0.7.0</div>
   <div class="abas" id="abas">
     <button data-aba="ida">Ida</button>
     <button data-aba="volta" class="on">Volta</button>
@@ -93,8 +93,9 @@
   <div class="aba-conteudo" id="aba-mapa">
     <div id="map"></div>
     <div class="legenda">
-      <span><i class="sw" style="background:var(--tronco)"></i> Troncal (203)</span>
-      <span><i class="sw" style="background:var(--alim)"></i> Alimentadoras</span>
+      <span><i class="sw" style="background:var(--tronco)"></i> Troncal</span>
+      <span><i class="sw" style="background:var(--alim)"></i> Alimentadora</span>
+      <span>━ trecho que você pega &nbsp; ┈ resto da linha</span>
       <span><i class="sw" style="background:#2563eb"></i> Você</span>
     </div>
     <p class="detalhe" id="mapaStatus" style="margin-top:8px">Carregando mapa…</p>
@@ -125,6 +126,11 @@
 <div class="overlay" id="ovCl">
   <div class="folha cl">
     <h2>O que mudou?</h2>
+    <h3>v0.7.0</h3>
+    <ul>
+      <li>Mapa: traçado agora <b>segue as ruas</b> (não corta mais quarteirões), com o trecho que você pega em linha cheia e o resto da linha pontilhado.</li>
+      <li>Corrigido o ponto da casa (estava caindo na Rui Barbosa; agora no Bacacheri).</li>
+    </ul>
     <h3>v0.6.0</h3>
     <ul>
       <li>Nova aba <b>Mapa</b>: o traçado do trajeto (troncal e alimentadoras) e a sua localização atual.</li>
