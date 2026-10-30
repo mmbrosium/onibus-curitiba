@@ -2,6 +2,17 @@
 
 Formato baseado em "Keep a Changelog".
 
+## [0.10.0] — 2026-10-30
+### Adicionado
+- **Setas de sentido (verde)** sobre o trecho usado de cada linha, mostrando pra onde a viagem segue.
+  Elas **invertem** quando você troca de aba: na **Ida** descem o mapa (rumo ao centro), na **Volta** sobem (rumo a casa).
+- **Trecho a pé (azul pontilhado)** ligando a sua **localização atual** ao ponto de embarque
+  (Erasto na Ida, Tubo Rui Barbosa na Volta), com **tempo estimado** no passo de ~5,5 km/h.
+
+### Observação
+- O trecho a pé é em **linha reta** por enquanto (aproximação). O caminho rua-a-rua de verdade
+  (roteador de pedestre) entra depois. Se Casa/Trabalho estiver definido, o a-pé usa esse ponto.
+
 ## [0.9.0] — 2026-10-29
 ### Mudança de layout
 - **Tela unificada**: o **mapa** virou a faixa de cima (visível nas duas abas, Ida e Volta) e o
