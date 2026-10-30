@@ -14,7 +14,7 @@
   <h1>🚌 Meu trajeto</h1>
   <div class="sub">Casa ⇄ Trabalho · Curitiba</div>
   <a class="linkLinhas" href="linhas.html">ver todas as linhas →</a>
-  <div class="ver">v0.9.0</div>
+  <div class="ver">v0.10.0</div>
 
   <div class="locbar" id="locbar">
     <button class="locchip" id="chipCasa"><span class="ic">🏠</span><span class="txt">definir casa</span></button>
@@ -38,7 +38,8 @@
         <span><i class="sw" style="background:var(--tronco)"></i> Troncal</span>
         <span><i class="sw" style="background:var(--alim)"></i> Alimentadora</span>
         <span>━ trecho que você pega &nbsp; ┈ resto da linha</span>
-        <span><i class="sw" style="background:#2563eb"></i> Você</span>
+        <span><b style="color:#17c951">▲</b> sentido da viagem</span>
+        <span><i class="sw" style="background:#2563eb"></i> Você &nbsp; ⋯ a pé (azul)</span>
         <span>Toque na linha (ou no número) pra ver os detalhes.</span>
       </div>
       <p class="detalhe" id="mapaStatus" style="margin-top:8px">Carregando mapa…</p>
@@ -161,6 +162,11 @@
 <div class="overlay" id="ovCl">
   <div class="folha cl">
     <h2>O que mudou?</h2>
+    <h3>v0.10.0</h3>
+    <ul>
+      <li><b>Setas verdes</b> no traçado mostram o <b>sentido da viagem</b> — e invertem quando você troca de aba (Ida desce o mapa, Volta sobe).</li>
+      <li><b>Trecho a pé em azul</b> (bolinhas) ligando a sua localização atual até o ponto de embarque, com o tempo estimado (~5,5 km/h).</li>
+    </ul>
     <h3>v0.9.0</h3>
     <ul>
       <li>Layout novo: o <b>mapa</b> virou faixa de cima (nas duas abas) e o <b>trajeto</b> a de baixo — as duas recolhem feito gaveta.</li>

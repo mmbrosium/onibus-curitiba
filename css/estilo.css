@@ -137,6 +137,11 @@ footer{color:var(--suave);font-size:.76rem;margin-top:22px;padding-top:12px;bord
 /* ---- aba Mapa ---- */
 #map{height:360px;border-radius:10px;z-index:0}
 .pinoLoc{font-size:1.5rem;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+.seta-wrap,.ape-wrap{background:none;border:none}
+.setaDir{display:inline-block;color:#17c951;font-size:16px;line-height:1;font-weight:900;transform-origin:center;
+  text-shadow:0 0 2px #fff,0 0 2px #fff,0 0 3px #fff,0 0 4px #0a7a2f}
+.apeLab{display:inline-block;background:#2563eb;color:#fff;font-size:.66rem;font-weight:700;white-space:nowrap;
+  padding:1px 6px;border-radius:9px;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4)}
 .legenda{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.82rem;color:var(--suave)}
 .legenda .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:middle}
 .leaflet-popup-content{font-size:.85rem}

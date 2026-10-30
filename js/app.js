@@ -156,7 +156,7 @@ function initMapa() {
     d.linhas.forEach(l => {
       const c = cor(l.tipo);
       const usado = l.shape.slice(l.i_emb, l.i_des + 1);
-      const g = { id: l.linha, todas: [], solido: null, casing: null, pontilhados: [], pino: null };
+      const g = { id: l.linha, l, todas: [], solido: null, casing: null, pontilhados: [], pino: null };
       // casing branco embaixo: separa a linha do fundo do mapa e das outras linhas
       const casing = L.polyline(usado, { color: "#fff", weight: 9, opacity: .9, lineCap: "round", lineJoin: "round" }).addTo(mapObj);
       g.casing = casing; g.todas.push(casing);
@@ -182,28 +182,81 @@ function initMapa() {
       g.pino = pino; g.todas.push(pino);
       linhasLayers.push(g);
     });
-    d.pontos.forEach(p => L.marker([p.lat, p.lon]).addTo(mapObj).bindPopup("<b>" + p.nome + "</b>"));
+    d.pontos.forEach(p => { PONTOS[p.nome] = [p.lat, p.lon]; L.marker([p.lat, p.lon]).addTo(mapObj).bindPopup("<b>" + p.nome + "</b>"); });
     if (solidos.length) mapObj.fitBounds(L.featureGroup(solidos).getBounds().pad(0.15));
     colocaPinos();
-    status.textContent = "Toque numa linha (ou no número dela) pra ver os detalhes. Ative a localização pra aparecer no mapa.";
+    desenhaSetas(abaAtual());
+    status.textContent = "Setas verdes = sentido da viagem (muda com a aba). Toque numa linha pra ver os detalhes. Ative a localização pro trecho a pé.";
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
-        L.circleMarker([pos.coords.latitude, pos.coords.longitude],
-          { radius: 8, color: "#fff", weight: 2, fillColor: "#2563eb", fillOpacity: 1 })
+        gps = [pos.coords.latitude, pos.coords.longitude];
+        L.circleMarker(gps, { radius: 8, color: "#fff", weight: 2, fillColor: "#2563eb", fillOpacity: 1 })
           .addTo(mapObj).bindPopup("Você está aqui");
-        status.textContent = "Sua localização está no mapa (ponto azul). Toque numa linha pra ver os detalhes.";
-      }, () => { status.textContent = "Permita a localização pra ver onde você está. Toque numa linha pra ver os detalhes."; });
+        desenhaApe(abaAtual());
+        status.textContent = "Ponto azul = você. A linha azul pontilhada é o trecho a pé até o embarque. Setas verdes = sentido.";
+      }, () => { status.textContent = "Permita a localização pro trecho a pé aparecer. As setas verdes já mostram o sentido."; });
     }
   }).catch(() => { status.textContent = "Não consegui carregar o mapa. Abra pela URL do GitHub Pages."; });
   setTimeout(() => mapObj.invalidateSize(), 250);
 }
 
-// trocar de aba só muda o conteúdo do trajeto (o mapa é compartilhado)
+// trocar de aba muda o trajeto (mapa é compartilhado) e inverte setas + a-pé
 document.getElementById("abas").addEventListener("click", e => {
   const aba = e.target.dataset.aba; if (!aba) return;
   document.querySelectorAll(".abas button").forEach(b => b.classList.toggle("on", b.dataset.aba === aba));
   document.querySelectorAll("#faixaTrajeto .aba-conteudo").forEach(c => c.classList.toggle("on", c.id === "aba-" + aba));
+  if (mapObj) { desenhaSetas(aba); desenhaApe(aba); }
 });
+
+// ---- setas de sentido (verde) + trecho a pé (azul) ----
+const CABRAL = [-25.4061, -49.2526];
+let setasLayer = [], gps = null, apeLayer = null, apeLabel = null;
+const PONTOS = {};
+const abaAtual = () => { const b = document.querySelector(".abas button.on"); return b ? b.dataset.aba : "volta"; };
+const dist2 = (a, b) => { const dx = (a[1] - b[1]) * Math.cos(a[0] * Math.PI / 180), dy = a[0] - b[0]; return dx * dx + dy * dy; };
+const bearing = (a, b) => { const dLon = (b[1] - a[1]) * Math.cos(((a[0] + b[0]) / 2) * Math.PI / 180), dLat = b[0] - a[0]; return Math.atan2(dLon, dLat) * 180 / Math.PI; };
+function haversine(a, b) { const R = 6371, r = x => x * Math.PI / 180; const dLa = r(b[0] - a[0]), dLo = r(b[1] - a[1]); const h = Math.sin(dLa / 2) ** 2 + Math.cos(r(a[0])) * Math.cos(r(b[0])) * Math.sin(dLo / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); }
+
+// ordena os pontos do trecho usado no sentido da viagem daquela aba
+function ptsSentido(l, aba) {
+  const usado = l.shape.slice(l.i_emb, l.i_des + 1);
+  const aEhCabral = dist2(usado[0], CABRAL) < dist2(usado[usado.length - 1], CABRAL);
+  // IDA: alimentadora flui PARA o Cabral; troncal flui SAINDO do Cabral (rumo ao centro)
+  let ida;
+  if (l.tipo === "alim") ida = aEhCabral ? usado.slice().reverse() : usado.slice();
+  else ida = aEhCabral ? usado.slice() : usado.slice().reverse();
+  return aba === "ida" ? ida : ida.slice().reverse();
+}
+function desenhaSetas(aba) {
+  if (!mapObj) return;
+  setasLayer.forEach(m => mapObj.removeLayer(m)); setasLayer = [];
+  linhasLayers.forEach(g => {
+    const pts = ptsSentido(g.l, aba); const n = pts.length; if (n < 2) return;
+    [0.22, 0.5, 0.78].forEach(f => {
+      const i = Math.min(n - 2, Math.max(0, Math.floor(f * (n - 1))));
+      const ang = bearing(pts[i], pts[i + 1]);
+      const m = L.marker(pts[i], { interactive: false, icon: L.divIcon({ className: "seta-wrap",
+        html: `<span class="setaDir" style="transform:rotate(${ang}deg)">▲</span>`, iconSize: [18, 18], iconAnchor: [9, 9] }) }).addTo(mapObj);
+      setasLayer.push(m);
+    });
+  });
+}
+function alvoApe(aba) {
+  if (aba === "ida") return (LOC.casa && LOC.casa.lat != null) ? [LOC.casa.lat, LOC.casa.lon] : PONTOS["Casa (Erasto/Bacacheri)"];
+  return (LOC.trabalho && LOC.trabalho.lat != null) ? [LOC.trabalho.lat, LOC.trabalho.lon] : PONTOS["Tubo Rui Barbosa"];
+}
+function desenhaApe(aba) {
+  if (!mapObj) return;
+  if (apeLayer) { mapObj.removeLayer(apeLayer); apeLayer = null; }
+  if (apeLabel) { mapObj.removeLayer(apeLabel); apeLabel = null; }
+  if (!gps) return;
+  const alvo = alvoApe(aba); if (!alvo) return;
+  apeLayer = L.polyline([gps, alvo], { color: "#2563eb", weight: 4, opacity: .9, dashArray: "1,10", lineCap: "round" }).addTo(mapObj);
+  const min = Math.max(1, Math.round(haversine(gps, alvo) / 5.5 * 60));
+  const mid = [(gps[0] + alvo[0]) / 2, (gps[1] + alvo[1]) / 2];
+  apeLabel = L.marker(mid, { interactive: false, icon: L.divIcon({ className: "ape-wrap",
+    html: `<span class="apeLab">🚶 ~${min} min</span>`, iconSize: [70, 18], iconAnchor: [35, 9] }) }).addTo(mapObj);
+}
 
 // faixas recolhíveis (gaveta): mapa em cima, trajeto embaixo
 document.querySelectorAll(".faixaCab").forEach(b => {
@@ -280,6 +333,7 @@ document.getElementById("locSalvar").onclick = async () => {
   try { localStorage.setItem("oc_" + tipoEdit, JSON.stringify(rec)); } catch (e) {}
   pintaChips();
   colocaPinos();
+  desenhaApe(abaAtual());
   if (lat == null) {
     locMsg.textContent = "Salvei o endereço, mas não achei no mapa agora (pode ser a conexão). Dá pra tentar de novo depois.";
   } else {
