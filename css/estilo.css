@@ -15,7 +15,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
      background:var(--bg);color:var(--texto);line-height:1.4}
-header{background:var(--marca);color:#fff;padding:18px 16px 0;position:relative}
+header{background:var(--marca);color:#fff;padding:18px 16px 0;position:sticky;top:0;z-index:30}
 header h1{font-size:1.2rem}
 header .sub{opacity:.92;font-size:.85rem;margin-top:2px}
 header .ver{opacity:.72;font-size:.72rem;margin-top:1px}
@@ -40,6 +40,18 @@ header .ver{opacity:.72;font-size:.72rem;margin-top:1px}
 main{padding:16px;max-width:560px;margin:0 auto}
 .aba-conteudo{display:none}
 .aba-conteudo.on{display:block}
+
+/* gate: trajeto/mapa só com casa+trabalho definidos */
+.oculto{display:none !important}
+.gate{display:none;text-align:center;padding:34px 18px;border:1px dashed var(--borda);
+  border-radius:14px;background:var(--card);margin-bottom:12px}
+.gate.on{display:block}
+.gateIcone{font-size:2rem}
+.gateTit{font-size:1.05rem;margin:6px 0 4px}
+.gateMsg{color:var(--suave);font-size:.88rem;max-width:380px;margin:0 auto}
+.gateBtns{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.gateBtn{background:var(--marca);color:#fff;border:none;border-radius:10px;
+  padding:10px 16px;font-weight:600;cursor:pointer}
 
 /* faixas recolhíveis (gaveta): mapa em cima, trajeto embaixo */
 .faixa{background:var(--card);border:1px solid var(--borda);border-radius:12px;margin-bottom:12px;overflow:hidden}
@@ -137,6 +149,11 @@ footer{color:var(--suave);font-size:.76rem;margin-top:22px;padding-top:12px;bord
 /* ---- aba Mapa ---- */
 #map{height:360px;border-radius:10px;z-index:0}
 .pinoLoc{font-size:1.5rem;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+.seta-wrap,.ape-wrap{background:none;border:none}
+.setaDir{display:inline-block;color:#17c951;font-size:16px;line-height:1;font-weight:900;transform-origin:center;
+  text-shadow:0 0 2px #fff,0 0 2px #fff,0 0 3px #fff,0 0 4px #0a7a2f}
+.apeLab{display:inline-block;background:#2563eb;color:#fff;font-size:.66rem;font-weight:700;white-space:nowrap;
+  padding:1px 6px;border-radius:9px;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4)}
 .legenda{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.82rem;color:var(--suave)}
 .legenda .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:middle}
 .leaflet-popup-content{font-size:.85rem}

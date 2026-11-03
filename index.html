@@ -14,7 +14,7 @@
   <h1>🚌 Meu trajeto</h1>
   <div class="sub">Casa ⇄ Trabalho · Curitiba</div>
   <a class="linkLinhas" href="linhas.html">ver todas as linhas →</a>
-  <div class="ver">v0.9.0</div>
+  <div class="ver">v0.11.0</div>
 
   <div class="locbar" id="locbar">
     <button class="locchip" id="chipCasa"><span class="ic">🏠</span><span class="txt">definir casa</span></button>
@@ -29,6 +29,17 @@
 </header>
 
 <main>
+  <!-- GATE: trajeto e mapa só aparecem com casa + trabalho definidos -->
+  <div class="gate" id="gate">
+    <div class="gateIcone">🧭</div>
+    <h2 class="gateTit">Preencha casa e trabalho</h2>
+    <p class="gateMsg">Pra ver o trajeto e o mapa, defina os dois endereços. Eles ficam salvos só no seu navegador.</p>
+    <div class="gateBtns">
+      <button class="gateBtn" id="gateCasa">🏠 Definir casa</button>
+      <button class="gateBtn" id="gateTrab">💼 Definir trabalho</button>
+    </div>
+  </div>
+
   <!-- FAIXA MAPA (compartilhada entre Ida e Volta) -->
   <section class="faixa" id="faixaMapa">
     <button class="faixaCab" aria-label="recolher mapa"><span>🗺️ Mapa</span><span class="chev">▾</span></button>
@@ -38,7 +49,8 @@
         <span><i class="sw" style="background:var(--tronco)"></i> Troncal</span>
         <span><i class="sw" style="background:var(--alim)"></i> Alimentadora</span>
         <span>━ trecho que você pega &nbsp; ┈ resto da linha</span>
-        <span><i class="sw" style="background:#2563eb"></i> Você</span>
+        <span><b style="color:#17c951">▲</b> sentido da viagem</span>
+        <span><i class="sw" style="background:#2563eb"></i> Você &nbsp; ⋯ a pé (azul)</span>
         <span>Toque na linha (ou no número) pra ver os detalhes.</span>
       </div>
       <p class="detalhe" id="mapaStatus" style="margin-top:8px">Carregando mapa…</p>
@@ -161,6 +173,18 @@
 <div class="overlay" id="ovCl">
   <div class="folha cl">
     <h2>O que mudou?</h2>
+    <h3>v0.11.0</h3>
+    <ul>
+      <li>O <b>trajeto e o mapa</b> só aparecem depois de você definir <b>Casa</b> e <b>Trabalho</b> — antes disso, um aviso pedindo pra preencher.</li>
+      <li><b>Header fixo</b>: as abas e os botões de Casa/Trabalho ficam grudados no topo ao rolar.</li>
+      <li><b>Mapa simplificado</b> (menos poluído) e <b>travado</b>, centralizado no traçado.</li>
+      <li>Trecho a pé recalculado a <b>5 km/h</b> (uma andada rápida).</li>
+    </ul>
+    <h3>v0.10.0</h3>
+    <ul>
+      <li><b>Setas verdes</b> no traçado mostram o <b>sentido da viagem</b> — e invertem quando você troca de aba (Ida desce o mapa, Volta sobe).</li>
+      <li><b>Trecho a pé em azul</b> (bolinhas) ligando a sua localização atual até o ponto de embarque, com o tempo estimado (~5,5 km/h).</li>
+    </ul>
     <h3>v0.9.0</h3>
     <ul>
       <li>Layout novo: o <b>mapa</b> virou faixa de cima (nas duas abas) e o <b>trajeto</b> a de baixo — as duas recolhem feito gaveta.</li>
