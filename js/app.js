@@ -146,12 +146,9 @@ ovLinha.onclick = e => { if (e.target === ovLinha) fechaLinha(); };
 
 function initMapa() {
   if (mapaIniciado) return; mapaIniciado = true;
-  // mapa travado e centralizado no traçado (não arrasta nem dá zoom)
-  mapObj = L.map("map", { dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
-    boxZoom: false, keyboard: false, touchZoom: false, zoomControl: false });
-  // basemap simplificado (Redux): claro, poucos rótulos
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-    { maxZoom: 19, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }).addTo(mapObj);
+  mapObj = L.map("map");
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(mapObj);
   const status = document.getElementById("mapaStatus");
   fetch("dados/mapa.json").then(r => r.json()).then(d => {
     const cor = t => t === "tronco" ? "#dc2626" : "#ea580c";
