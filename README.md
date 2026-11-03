@@ -37,7 +37,7 @@ Por isso o projeto separa **dados** de **código**:
 ## ⚠️ Como abrir
 
 Como o app **busca** os arquivos de dados, ele precisa ser servido por HTTP —
-**abra pela URL do GitHub Pages** (`https://mmbrosium.github.io/onibus-curitiba/`),
+**abra pela [URL do GitHub Pages](https://mmbrosium.github.io/onibus-curitiba/)**,
 não abrindo o arquivo solto no celular (o navegador bloqueia a busca em `file://`).
 
 ## Atualizar os dados

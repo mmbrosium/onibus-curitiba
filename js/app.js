@@ -101,7 +101,7 @@ document.getElementById("okCl").onclick = () => ovCl.classList.remove("on");
 ovCl.onclick = e => { if (e.target === ovCl) ovCl.classList.remove("on"); };
 
 // ---- mapa (Leaflet), iniciado só quando a aba Mapa é aberta ----
-let mapaIniciado = false, mapObj = null;
+let mapaIniciado = false, mapObj = null, rotaBounds = null;
 let linhasLayers = [], linhaAberta = null;
 const ovLinha = document.getElementById("ovLinha");
 const linhaFolha = document.getElementById("linhaFolha");
@@ -146,9 +146,12 @@ ovLinha.onclick = e => { if (e.target === ovLinha) fechaLinha(); };
 
 function initMapa() {
   if (mapaIniciado) return; mapaIniciado = true;
-  mapObj = L.map("map");
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(mapObj);
+  // mapa travado e centralizado no traçado (não arrasta nem dá zoom)
+  mapObj = L.map("map", { dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
+    boxZoom: false, keyboard: false, touchZoom: false, zoomControl: false });
+  // basemap simplificado (Redux): claro, poucos rótulos
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+    { maxZoom: 19, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }).addTo(mapObj);
   const status = document.getElementById("mapaStatus");
   fetch("dados/mapa.json").then(r => r.json()).then(d => {
     const cor = t => t === "tronco" ? "#dc2626" : "#ea580c";
@@ -183,7 +186,7 @@ function initMapa() {
       linhasLayers.push(g);
     });
     d.pontos.forEach(p => { PONTOS[p.nome] = [p.lat, p.lon]; L.marker([p.lat, p.lon]).addTo(mapObj).bindPopup("<b>" + p.nome + "</b>"); });
-    if (solidos.length) mapObj.fitBounds(L.featureGroup(solidos).getBounds().pad(0.15));
+    if (solidos.length) { rotaBounds = L.featureGroup(solidos).getBounds().pad(0.12); mapObj.fitBounds(rotaBounds); }
     colocaPinos();
     desenhaSetas(abaAtual());
     status.textContent = "Setas verdes = sentido da viagem (muda com a aba). Toque numa linha pra ver os detalhes. Ative a localização pro trecho a pé.";
@@ -252,7 +255,7 @@ function desenhaApe(aba) {
   if (!gps) return;
   const alvo = alvoApe(aba); if (!alvo) return;
   apeLayer = L.polyline([gps, alvo], { color: "#2563eb", weight: 4, opacity: .9, dashArray: "1,10", lineCap: "round" }).addTo(mapObj);
-  const min = Math.max(1, Math.round(haversine(gps, alvo) / 5.5 * 60));
+  const min = Math.max(1, Math.round(haversine(gps, alvo) / 5 * 60));
   const mid = [(gps[0] + alvo[0]) / 2, (gps[1] + alvo[1]) / 2];
   apeLabel = L.marker(mid, { interactive: false, icon: L.divIcon({ className: "ape-wrap",
     html: `<span class="apeLab">🚶 ~${min} min</span>`, iconSize: [70, 18], iconAnchor: [35, 9] }) }).addTo(mapObj);
@@ -277,12 +280,22 @@ const locMsg = document.getElementById("locMsg");
 const locTitulo = document.getElementById("locTitulo");
 const curto = q => q.split(",").slice(0, 2).join(",").trim();
 
+// trajeto + mapa só aparecem quando Casa E Trabalho estão preenchidos
+function atualizaGate() {
+  const ok = !!(LOC.casa && LOC.trabalho);
+  const gate = document.getElementById("gate");
+  if (gate) gate.classList.toggle("on", !ok);
+  document.getElementById("faixaMapa").classList.toggle("oculto", !ok);
+  document.getElementById("faixaTrajeto").classList.toggle("oculto", !ok);
+  if (ok && mapObj) setTimeout(() => { mapObj.invalidateSize(); if (rotaBounds) mapObj.fitBounds(rotaBounds); }, 60);
+}
 function carregaLoc() {
   try {
     LOC.casa = JSON.parse(localStorage.getItem("oc_casa") || "null");
     LOC.trabalho = JSON.parse(localStorage.getItem("oc_trabalho") || "null");
   } catch (e) {}
   pintaChips();
+  atualizaGate();
 }
 function pintaChips() {
   const setChip = (id, rec, vazio) => {
@@ -314,6 +327,8 @@ function abreLoc(tipo) {
 }
 document.getElementById("chipCasa").onclick = () => abreLoc("casa");
 document.getElementById("chipTrab").onclick = () => abreLoc("trabalho");
+const _gc = document.getElementById("gateCasa"); if (_gc) _gc.onclick = () => abreLoc("casa");
+const _gt = document.getElementById("gateTrab"); if (_gt) _gt.onclick = () => abreLoc("trabalho");
 ovLoc.onclick = e => { if (e.target === ovLoc) ovLoc.classList.remove("on"); };
 
 document.getElementById("locSalvar").onclick = async () => {
@@ -334,6 +349,7 @@ document.getElementById("locSalvar").onclick = async () => {
   pintaChips();
   colocaPinos();
   desenhaApe(abaAtual());
+  atualizaGate();
   if (lat == null) {
     locMsg.textContent = "Salvei o endereço, mas não achei no mapa agora (pode ser a conexão). Dá pra tentar de novo depois.";
   } else {

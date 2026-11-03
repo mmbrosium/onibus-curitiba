@@ -14,7 +14,7 @@
   <h1>🚌 Meu trajeto</h1>
   <div class="sub">Casa ⇄ Trabalho · Curitiba</div>
   <a class="linkLinhas" href="linhas.html">ver todas as linhas →</a>
-  <div class="ver">v0.10.0</div>
+  <div class="ver">v0.11.0</div>
 
   <div class="locbar" id="locbar">
     <button class="locchip" id="chipCasa"><span class="ic">🏠</span><span class="txt">definir casa</span></button>
@@ -29,6 +29,17 @@
 </header>
 
 <main>
+  <!-- GATE: trajeto e mapa só aparecem com casa + trabalho definidos -->
+  <div class="gate" id="gate">
+    <div class="gateIcone">🧭</div>
+    <h2 class="gateTit">Preencha casa e trabalho</h2>
+    <p class="gateMsg">Pra ver o trajeto e o mapa, defina os dois endereços. Eles ficam salvos só no seu navegador.</p>
+    <div class="gateBtns">
+      <button class="gateBtn" id="gateCasa">🏠 Definir casa</button>
+      <button class="gateBtn" id="gateTrab">💼 Definir trabalho</button>
+    </div>
+  </div>
+
   <!-- FAIXA MAPA (compartilhada entre Ida e Volta) -->
   <section class="faixa" id="faixaMapa">
     <button class="faixaCab" aria-label="recolher mapa"><span>🗺️ Mapa</span><span class="chev">▾</span></button>
@@ -162,6 +173,13 @@
 <div class="overlay" id="ovCl">
   <div class="folha cl">
     <h2>O que mudou?</h2>
+    <h3>v0.11.0</h3>
+    <ul>
+      <li>O <b>trajeto e o mapa</b> só aparecem depois de você definir <b>Casa</b> e <b>Trabalho</b> — antes disso, um aviso pedindo pra preencher.</li>
+      <li><b>Header fixo</b>: as abas e os botões de Casa/Trabalho ficam grudados no topo ao rolar.</li>
+      <li><b>Mapa simplificado</b> (menos poluído) e <b>travado</b>, centralizado no traçado.</li>
+      <li>Trecho a pé recalculado a <b>5 km/h</b> (uma andada rápida).</li>
+    </ul>
     <h3>v0.10.0</h3>
     <ul>
       <li><b>Setas verdes</b> no traçado mostram o <b>sentido da viagem</b> — e invertem quando você troca de aba (Ida desce o mapa, Volta sobe).</li>
