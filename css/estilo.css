@@ -125,7 +125,7 @@ header{flex:none;background:var(--marca);color:#fff;padding:8px 12px 0;z-index:3
 footer{color:var(--suave);font-size:.76rem;margin-top:22px;padding-top:12px;border-top:1px solid var(--borda)}
 
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;
-  align-items:flex-end;justify-content:center;z-index:10}
+  align-items:flex-end;justify-content:center;z-index:100}
 .overlay.on{display:flex}
 .folha{background:var(--bg);width:100%;max-width:560px;border-radius:16px 16px 0 0;
   padding:16px 16px 22px;max-height:80vh;overflow-y:auto}
