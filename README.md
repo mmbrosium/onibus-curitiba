@@ -4,8 +4,9 @@ App pra consultar o transporte de Curitiba, pensado pro celular. Feito em
 HTML, CSS e JavaScript puro (sem framework), com extratores em Python.
 
 Duas telas:
-- **Meu trajeto** (`index.html`) — o caminho casa ⇄ trabalho, com Ida e Volta,
-  baldeação, 1 passagem, e os horários reais das alimentadoras.
+- **Meu trajeto** (`index.html`) — monta o caminho casa ⇄ trabalho de quem usa
+  (os endereços ficam só no navegador), com Ida e Volta, baldeação, 1 passagem
+  e os horários reais das alimentadoras.
 - **Todas as linhas** (`linhas.html`) — busca entre as 309 linhas da cidade.
 
 ## A arquitetura (importante)
