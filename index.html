@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ônibus Curitiba — meu trajeto</title>
 <link rel="stylesheet" href="css/estilo.css">
 <link rel="stylesheet" href="libs/leaflet/leaflet.css">
@@ -10,17 +10,14 @@
 </head>
 <body>
 <header>
-  <button class="engren" id="btnConfig" aria-label="config">⚙️</button>
-  <h1>🚌 Meu trajeto</h1>
-  <div class="sub">Casa ⇄ Trabalho · Curitiba</div>
-  <a class="linkLinhas" href="linhas.html">ver todas as linhas →</a>
-  <div class="ver">v0.11.0</div>
-
-  <div class="locbar" id="locbar">
-    <button class="locchip" id="chipCasa"><span class="ic">🏠</span><span class="txt">definir casa</span></button>
-    <button class="locchip" id="chipTrab"><span class="ic">💼</span><span class="txt">definir trabalho</span></button>
+  <div class="topoRow">
+    <button class="locPill" id="locPill">
+      <span class="lp" id="pCasa"><span class="ic">🏠</span><span class="txt" id="pillCasa">definir casa</span></span>
+      <span class="seta">⇄</span>
+      <span class="lp" id="pTrab"><span class="ic">💼</span><span class="txt" id="pillTrab">definir trabalho</span></span>
+    </button>
+    <button class="engren" id="btnConfig" aria-label="config">⚙️</button>
   </div>
-
   <div class="abas" id="abas">
     <button data-aba="ida">Ida</button>
     <button data-aba="volta" class="on">Volta</button>
@@ -28,39 +25,30 @@
   </div>
 </header>
 
-<main>
-  <!-- GATE: trajeto e mapa só aparecem com casa + trabalho definidos -->
+<main id="palco">
+  <div id="map"></div>
+
+  <!-- GATE: aparece quando casa/trabalho não definidos -->
   <div class="gate" id="gate">
-    <div class="gateIcone">🧭</div>
-    <h2 class="gateTit">Preencha casa e trabalho</h2>
-    <p class="gateMsg">Pra ver o trajeto e o mapa, defina os dois endereços. Eles ficam salvos só no seu navegador.</p>
-    <div class="gateBtns">
-      <button class="gateBtn" id="gateCasa">🏠 Definir casa</button>
-      <button class="gateBtn" id="gateTrab">💼 Definir trabalho</button>
+    <div class="gateCard">
+      <div class="gateIcone">🧭</div>
+      <h2 class="gateTit">Preencha casa e trabalho</h2>
+      <p class="gateMsg">Pra ver o trajeto e o mapa, defina os dois endereços. Ficam salvos só no seu navegador.</p>
+      <div class="gateBtns">
+        <button class="gateBtn" id="gateCasa">🏠 Definir casa</button>
+        <button class="gateBtn" id="gateTrab">💼 Definir trabalho</button>
+      </div>
     </div>
   </div>
 
-  <!-- FAIXA MAPA (compartilhada entre Ida e Volta) -->
-  <section class="faixa" id="faixaMapa">
-    <button class="faixaCab" aria-label="recolher mapa"><span>🗺️ Mapa</span><span class="chev">▾</span></button>
-    <div class="faixaCorpo">
-      <div id="map"></div>
-      <div class="legenda">
-        <span><i class="sw" style="background:var(--tronco)"></i> Troncal</span>
-        <span><i class="sw" style="background:var(--alim)"></i> Alimentadora</span>
-        <span>━ trecho que você pega &nbsp; ┈ resto da linha</span>
-        <span><b style="color:#17c951">▲</b> sentido da viagem</span>
-        <span><i class="sw" style="background:#2563eb"></i> Você &nbsp; ⋯ a pé (azul)</span>
-        <span>Toque na linha (ou no número) pra ver os detalhes.</span>
-      </div>
-      <p class="detalhe" id="mapaStatus" style="margin-top:8px">Carregando mapa…</p>
-    </div>
-  </section>
-
-  <!-- FAIXA TRAJETO (muda por aba) -->
-  <section class="faixa" id="faixaTrajeto">
-    <button class="faixaCab" aria-label="recolher trajeto"><span>🧭 Trajeto</span><span class="chev">▾</span></button>
-    <div class="faixaCorpo">
+  <!-- TRAJETO: painel deslizante (estilo Maps) -->
+  <section class="sheet" id="sheet">
+    <button class="sheetHandle" id="sheetHandle">
+      <span class="puxador"></span>
+      <span class="sheetResumo" id="sheetResumo">Trajeto</span>
+      <span class="chev" id="sheetChev">▴</span>
+    </button>
+    <div class="sheetCorpo" id="sheetCorpo">
 
       <!-- VOLTA -->
       <div class="aba-conteudo on" id="aba-volta">
@@ -68,7 +56,6 @@
           <span class="lab">saio do trabalho às</span>
           <span class="val" id="valHora">--:--</span>
         </div>
-
         <div class="passo andar" style="margin-top:14px">
           <div class="bolha">🚶</div><div class="titulo">Sai do trabalho → tubo Rui Barbosa</div>
           <div class="detalhe">~8 min a pé</div>
@@ -117,7 +104,7 @@
         </div>
         <div class="passo andar">
           <div class="bolha">🚶</div><div class="titulo">Rui Barbosa → trabalho</div>
-          <div class="nota">trecho a pé — detalhe vem com o mapa</div>
+          <div class="nota">trecho a pé — detalhe no mapa</div>
         </div>
         <footer>Ida: as duas pernas são "pega a que vier" — embarque em pontos do meio da linha. Ganha horário exato com o tempo real.</footer>
       </div>
@@ -127,8 +114,22 @@
         <div class="vazio">🚧 Consolidado = teu dia inteiro (ida + volta) num resumo, cada trajeto numa cor. Próximo marco.</div>
       </div>
 
+      <div class="sheetRodape">
+        <a class="linkLinhas" href="linhas.html">ver todas as linhas →</a>
+        <span class="ver">v0.13.0</span>
+      </div>
     </div>
   </section>
+
+  <!-- legenda flutuante do mapa -->
+  <button class="legBtn" id="legBtn" aria-label="legenda">?</button>
+  <div class="legendaPop" id="legendaPop">
+    <span><i class="sw" style="background:var(--tronco)"></i> Troncal</span>
+    <span><i class="sw" style="background:var(--alim)"></i> Alimentadora</span>
+    <span>━ trecho que você pega &nbsp; ┈ resto da linha</span>
+    <span><b style="color:#17c951">▲</b> sentido &nbsp; <i class="sw" style="background:#2563eb"></i> você &nbsp; ⋯ a pé</span>
+    <span>Toque na linha pra ver os detalhes.</span>
+  </div>
 </main>
 
 <!-- gaveta: definir casa/trabalho -->
@@ -173,37 +174,25 @@
 <div class="overlay" id="ovCl">
   <div class="folha cl">
     <h2>O que mudou?</h2>
-    <h3>v0.11.0</h3>
+    <h3>v0.13.0</h3>
     <ul>
-      <li>O <b>trajeto e o mapa</b> só aparecem depois de você definir <b>Casa</b> e <b>Trabalho</b> — antes disso, um aviso pedindo pra preencher.</li>
-      <li><b>Header fixo</b>: as abas e os botões de Casa/Trabalho ficam grudados no topo ao rolar.</li>
-      <li><b>Mapa simplificado</b> (menos poluído) e <b>travado</b>, centralizado no traçado.</li>
-      <li>Trecho a pé recalculado a <b>5 km/h</b> (uma andada rápida).</li>
+      <li>Organização: juntei num lugar só o layout estilo Maps, o ajuste do README e o parser da "fita" da URBS (ferramenta pros horários da Ida). Visualmente, o app segue igual ao v0.12.</li>
     </ul>
-    <h3>v0.10.0</h3>
+    <h3>v0.12.0</h3>
     <ul>
-      <li><b>Setas verdes</b> no traçado mostram o <b>sentido da viagem</b> — e invertem quando você troca de aba (Ida desce o mapa, Volta sobe).</li>
-      <li><b>Trecho a pé em azul</b> (bolinhas) ligando a sua localização atual até o ponto de embarque, com o tempo estimado (~5,5 km/h).</li>
+      <li>Layout <b>estilo Maps</b>: topo virou uma faixinha (Casa ⇄ Trabalho + Ida/Volta) que abre um modal pra editar; o mapa ocupa a tela; o <b>trajeto desliza</b> de baixo.</li>
+      <li>Busca de endereço de Casa/Trabalho com <b>mais precisão</b> (restrita a Curitiba, prioriza o número) e mostra o endereço que achou.</li>
     </ul>
-    <h3>v0.9.0</h3>
+    <h3>v0.11.x</h3>
     <ul>
-      <li>Layout novo: o <b>mapa</b> virou faixa de cima (nas duas abas) e o <b>trajeto</b> a de baixo — as duas recolhem feito gaveta.</li>
-      <li>Topo com <b>Casa</b> e <b>Trabalho</b>: começa vazio, você preenche, e fica salvo no navegador. O endereço vira um pino no mapa.</li>
+      <li>Gate (trajeto só com casa+trabalho), header fixo, a pé a 5 km/h; mapa de volta pro OpenStreetMap.</li>
     </ul>
-    <h3>v0.8.0</h3>
+    <h3>v0.10 / v0.9</h3>
     <ul>
-      <li>Mapa com mais contraste (contorno branco + pino com o número da linha) e gaveta com os detalhes ao tocar na linha.</li>
+      <li>Setas de sentido (verde) + trecho a pé (azul); mapa e trajeto em faixas; Casa/Trabalho salvos no navegador.</li>
     </ul>
-    <h3>v0.7.0</h3>
-    <ul>
-      <li>Mapa: traçado segue as ruas (não corta quarteirões); trecho usado em linha cheia, resto pontilhado. Casa corrigida pro Bacacheri.</li>
-    </ul>
-    <h3>v0.6.0 / v0.5.0</h3>
-    <ul>
-      <li>Aba Mapa; Volta calculada a partir de "saio do trabalho às"; seletor de hora no mouse; São João (213) no lugar do Colina Verde.</li>
-    </ul>
-    <h3>v0.4.0 e antes</h3>
-    <ul><li>Virada da fiação (horários em JSON); 3 abas; tema roxo meia-noite; busca das 309 linhas + extrator Python.</li></ul>
+    <h3>v0.8 e antes</h3>
+    <ul><li>Contraste do mapa + gaveta da linha; traçado seguindo as ruas; virada da fiação (horários em JSON); busca das 309 linhas.</li></ul>
     <button class="ok" id="okCl">Fechar</button>
   </div>
 </div>

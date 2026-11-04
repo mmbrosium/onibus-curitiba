@@ -146,12 +146,9 @@ ovLinha.onclick = e => { if (e.target === ovLinha) fechaLinha(); };
 
 function initMapa() {
   if (mapaIniciado) return; mapaIniciado = true;
-  // mapa travado e centralizado no traçado (não arrasta nem dá zoom)
-  mapObj = L.map("map", { dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
-    boxZoom: false, keyboard: false, touchZoom: false, zoomControl: false });
-  // basemap simplificado (Redux): claro, poucos rótulos
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-    { maxZoom: 19, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }).addTo(mapObj);
+  mapObj = L.map("map");
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(mapObj);
   const status = document.getElementById("mapaStatus");
   fetch("dados/mapa.json").then(r => r.json()).then(d => {
     const cor = t => t === "tronco" ? "#dc2626" : "#ea580c";
@@ -207,9 +204,26 @@ function initMapa() {
 document.getElementById("abas").addEventListener("click", e => {
   const aba = e.target.dataset.aba; if (!aba) return;
   document.querySelectorAll(".abas button").forEach(b => b.classList.toggle("on", b.dataset.aba === aba));
-  document.querySelectorAll("#faixaTrajeto .aba-conteudo").forEach(c => c.classList.toggle("on", c.id === "aba-" + aba));
+  document.querySelectorAll("#sheetCorpo .aba-conteudo").forEach(c => c.classList.toggle("on", c.id === "aba-" + aba));
+  atualizaResumo(aba);
   if (mapObj) { desenhaSetas(aba); desenhaApe(aba); }
 });
+
+// resumo no cabeçalho do trajeto deslizante
+function atualizaResumo(aba) {
+  const el = document.getElementById("sheetResumo");
+  if (!el) return;
+  const txt = { ida: "🧭 Ida · casa → trabalho", volta: "🧭 Volta · trabalho → casa", consolidado: "🧭 Consolidado" };
+  el.textContent = txt[aba] || "Trajeto";
+}
+
+// trajeto deslizante (abre/fecha) + legenda flutuante
+document.getElementById("sheetHandle").onclick = () => {
+  document.getElementById("sheet").classList.toggle("aberta");
+  if (mapObj) setTimeout(() => mapObj.invalidateSize(), 260);
+};
+const _leg = document.getElementById("legBtn");
+if (_leg) _leg.onclick = () => document.getElementById("legendaPop").classList.toggle("on");
 
 // ---- setas de sentido (verde) + trecho a pé (azul) ----
 const CABRAL = [-25.4061, -49.2526];
@@ -261,15 +275,7 @@ function desenhaApe(aba) {
     html: `<span class="apeLab">🚶 ~${min} min</span>`, iconSize: [70, 18], iconAnchor: [35, 9] }) }).addTo(mapObj);
 }
 
-// faixas recolhíveis (gaveta): mapa em cima, trajeto embaixo
-document.querySelectorAll(".faixaCab").forEach(b => {
-  b.onclick = () => {
-    const sec = b.closest(".faixa");
-    sec.classList.toggle("recolhida");
-    if (sec.id === "faixaMapa" && mapObj && !sec.classList.contains("recolhida"))
-      setTimeout(() => mapObj.invalidateSize(), 210);
-  };
-});
+// (o trajeto agora é o bottom sheet; o toggle está no sheetHandle acima)
 
 // ---- Casa / Trabalho: salvo no navegador (localStorage) + pino no mapa ----
 const LOC = { casa: null, trabalho: null };
@@ -283,11 +289,10 @@ const curto = q => q.split(",").slice(0, 2).join(",").trim();
 // trajeto + mapa só aparecem quando Casa E Trabalho estão preenchidos
 function atualizaGate() {
   const ok = !!(LOC.casa && LOC.trabalho);
-  const gate = document.getElementById("gate");
-  if (gate) gate.classList.toggle("on", !ok);
-  document.getElementById("faixaMapa").classList.toggle("oculto", !ok);
-  document.getElementById("faixaTrajeto").classList.toggle("oculto", !ok);
-  if (ok && mapObj) setTimeout(() => { mapObj.invalidateSize(); if (rotaBounds) mapObj.fitBounds(rotaBounds); }, 60);
+  document.getElementById("gate").classList.toggle("on", !ok);
+  document.getElementById("sheet").classList.toggle("oculto", !ok);
+  const lb = document.getElementById("legBtn"); if (lb) lb.classList.toggle("oculto", !ok);
+  if (ok && mapObj) setTimeout(() => { mapObj.invalidateSize(); if (rotaBounds) mapObj.fitBounds(rotaBounds); }, 80);
 }
 function carregaLoc() {
   try {
@@ -298,13 +303,12 @@ function carregaLoc() {
   atualizaGate();
 }
 function pintaChips() {
-  const setChip = (id, rec, vazio) => {
-    const el = document.getElementById(id);
-    el.querySelector(".txt").textContent = rec ? rec.label : vazio;
-    el.classList.toggle("set", !!rec);
+  const set = (lpId, txtId, rec, vazio) => {
+    document.getElementById(txtId).textContent = rec ? rec.label : vazio;
+    document.getElementById(lpId).classList.toggle("set", !!rec);
   };
-  setChip("chipCasa", LOC.casa, "definir casa");
-  setChip("chipTrab", LOC.trabalho, "definir trabalho");
+  set("pCasa", "pillCasa", LOC.casa, "definir casa");
+  set("pTrab", "pillTrab", LOC.trabalho, "definir trabalho");
 }
 function colocaPinos() {
   if (!mapObj) return;
@@ -325,8 +329,8 @@ function abreLoc(tipo) {
   ovLoc.classList.add("on");
   setTimeout(() => locInput.focus(), 120);
 }
-document.getElementById("chipCasa").onclick = () => abreLoc("casa");
-document.getElementById("chipTrab").onclick = () => abreLoc("trabalho");
+document.getElementById("pCasa").onclick = (e) => { e.stopPropagation(); abreLoc("casa"); };
+document.getElementById("pTrab").onclick = (e) => { e.stopPropagation(); abreLoc("trabalho"); };
 const _gc = document.getElementById("gateCasa"); if (_gc) _gc.onclick = () => abreLoc("casa");
 const _gt = document.getElementById("gateTrab"); if (_gt) _gt.onclick = () => abreLoc("trabalho");
 ovLoc.onclick = e => { if (e.target === ovLoc) ovLoc.classList.remove("on"); };
@@ -335,15 +339,20 @@ document.getElementById("locSalvar").onclick = async () => {
   const q = locInput.value.trim();
   if (!q) { locMsg.textContent = "Digite um endereço."; return; }
   locMsg.textContent = "Localizando…";
-  let lat = null, lon = null;
+  let lat = null, lon = null, achou = "";
   try {
-    const u = "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=br&q="
-      + encodeURIComponent(q + ", Curitiba, PR");
+    // restrito a Curitiba (viewbox) e priorizando o resultado com número da casa
+    const u = "https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6"
+      + "&countrycodes=br&viewbox=-49.47,-25.33,-49.14,-25.65&bounded=1&q="
+      + encodeURIComponent(q);
     const r = await fetch(u, { headers: { "Accept-Language": "pt-BR" } });
     const j = await r.json();
-    if (j && j.length) { lat = +j[0].lat; lon = +j[0].lon; }
+    if (Array.isArray(j) && j.length) {
+      const best = j.find(x => x.address && x.address.house_number) || j[0];
+      lat = +best.lat; lon = +best.lon; achou = best.display_name || "";
+    }
   } catch (e) {}
-  const rec = { label: curto(q), endereco: q, lat, lon };
+  const rec = { label: curto(achou || q), endereco: q, match: achou, lat, lon };
   LOC[tipoEdit] = rec;
   try { localStorage.setItem("oc_" + tipoEdit, JSON.stringify(rec)); } catch (e) {}
   pintaChips();
@@ -351,10 +360,11 @@ document.getElementById("locSalvar").onclick = async () => {
   desenhaApe(abaAtual());
   atualizaGate();
   if (lat == null) {
-    locMsg.textContent = "Salvei o endereço, mas não achei no mapa agora (pode ser a conexão). Dá pra tentar de novo depois.";
+    locMsg.textContent = "Salvei o endereço, mas não achei no mapa agora (pode ser a conexão). Tenta de novo depois.";
   } else {
+    locMsg.textContent = "✓ achei: " + (achou || "ponto no mapa");
     if (mapObj) mapObj.panTo([lat, lon]);
-    ovLoc.classList.remove("on");
+    setTimeout(() => ovLoc.classList.remove("on"), 1100);
   }
 };
 
@@ -365,6 +375,7 @@ selH = agora.getHours(); selM = agora.getMinutes();
 
 carregaLoc();
 initMapa();
+atualizaResumo(abaAtual());
 
 fetch("dados/trajeto.json")
   .then(r => r.json())
